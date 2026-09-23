@@ -189,13 +189,36 @@ color:#e83e8c;
 .comment-box{
 display:none;
 margin-top:10px;
+display:flex;
+align-items:center;
+gap:8px;
+padding:8px;
+background:#f7f5ff;
+border:1px solid #eee;
+border-radius:25px;
 }
 
 .comment-box input{
-width:100%;
-padding:10px;
-border:1px solid #ddd;
+flex:1;
+width:auto;
+padding:10px 14px;
+border:0;
+outline:none;
+background:white;
 border-radius:20px;
+font-size:14px;
+}
+
+.comment-box button{
+border:0;
+padding:9px 14px;
+border-radius:20px;
+background:linear-gradient(135deg,#5b35f5,#e83e8c);
+color:white;
+font-weight:bold;
+font-size:13px;
+cursor:pointer;
+white-space:nowrap;
 }
 
 .comments-list{margin-top:10px}
