@@ -1885,6 +1885,7 @@ function commentRealPost(button){
 let card=button.closest(".card");
 
 let box=card.querySelector(".comment-box");
+let list=card.querySelector(".comments-list");
 
 if(box.style.display==="block"){
 
@@ -1894,12 +1895,14 @@ box.style.display="none";
 
 box.style.display="block";
 
+if(list){
+list.style.display="block";
+}
+
 let input=box.querySelector("input");
 
 if(input){
-
 input.focus();
-
 }
 
 }
