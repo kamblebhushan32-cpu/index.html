@@ -1610,13 +1610,19 @@ onclick="saveRealPost('${id}',this)">
 
 <input
 placeholder="Write a comment..."
-onkeydown="sendRealComment(event,this,'${id}')">
+id="comment-input-${id}">
+
+<button
+onclick="sendRealComment(null,document.getElementById('comment-input-${id}'),'${id}')">
+💬 Post Comment
+</button>
 
 </div>
 
 <div
 class="comments-list"
-id="comments-${id}">
+id="comments-${id}"
+style="display:none;">
 </div>
 
 `;
@@ -1843,14 +1849,29 @@ function comment(button){
 let card=button.closest(".card");
 
 let box=card.querySelector(".comment-box");
+let list=card.querySelector(".comments-list");
 
 if(box.style.display==="block"){
 
 box.style.display="none";
 
+if(list){
+list.style.display="none";
+}
+
 }else{
 
 box.style.display="block";
+
+if(list){
+list.style.display="block";
+}
+
+let input=box.querySelector("input");
+
+if(input){
+input.focus();
+}
 
 }
 
@@ -1937,9 +1958,6 @@ function sendRealComment(event,input,postId){
 
 if(event.key!=="Enter"){
 
-return;
-
-}
 
 let text=input.value.trim();
 
