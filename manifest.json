@@ -1,0 +1,10 @@
+{
+  "name": "MAITRI",
+  "short_name": "MAITRI",
+  "description": "MAITRI is a social media app for connecting with friends, sharing posts, stories, reels and videos.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6c2bd9",
+  "orientation": "portrait"
+}
