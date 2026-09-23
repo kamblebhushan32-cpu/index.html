@@ -1,0 +1,2605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MAITRI</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f3f4f6;
+color:#222;
+padding-bottom:75px;
+}
+
+header{
+background:linear-gradient(135deg,#5b35f5,#e83e8c);
+color:white;
+padding:14px 15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:30;
+}
+
+.logo{font-size:26px;font-weight:900}
+
+.header-buttons button{
+border:0;
+background:white;
+color:#5b35f5;
+border-radius:50%;
+width:38px;
+height:38px;
+margin-left:4px;
+font-size:17px;
+}
+
+.topnav{
+display:flex;
+gap:6px;
+overflow-x:auto;
+background:white;
+padding:8px 5px;
+position:sticky;
+top:55px;
+z-index:29;
+box-shadow:0 2px 5px #0001;
+}
+
+.topnav button{
+border:0;
+background:#eee;
+padding:9px 13px;
+border-radius:20px;
+white-space:nowrap;
+}
+
+.topnav button.active{
+background:#5b35f5;
+color:white;
+}
+
+.container{
+max-width:650px;
+margin:auto;
+padding:12px;
+}
+
+.page{display:none}
+.page.active{display:block}
+
+.card{
+background:white;
+border-radius:16px;
+padding:15px;
+margin-bottom:15px;
+box-shadow:0 2px 8px #0001;
+}
+
+.stories{
+display:flex;
+gap:12px;
+overflow-x:auto;
+margin-bottom:15px;
+}
+
+.story{
+min-width:72px;
+text-align:center;
+}
+
+.story-img{
+width:62px;
+height:62px;
+margin:auto;
+border-radius:50%;
+background:linear-gradient(135deg,#5b35f5,#e83e8c);
+color:white;
+display:grid;
+place-items:center;
+font-size:24px;
+font-weight:bold;
+border:3px solid white;
+}
+
+.create{
+display:flex;
+gap:8px;
+}
+
+.create input{
+flex:1;
+padding:13px;
+border:1px solid #ddd;
+border-radius:25px;
+}
+
+.primary{
+border:0;
+background:#5b35f5;
+color:white;
+border-radius:25px;
+padding:10px 16px;
+font-weight:bold;
+}
+
+.post-head{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.avatar{
+width:45px;
+height:45px;
+border-radius:50%;
+background:linear-gradient(135deg,#5b35f5,#e83e8c);
+color:white;
+display:grid;
+place-items:center;
+font-weight:bold;
+}
+
+.post-image{
+width:100%;
+height:220px;
+margin-top:12px;
+border-radius:13px;
+background:linear-gradient(135deg,#d9d9ff,#ffd6e8);
+display:grid;
+place-items:center;
+font-size:65px;
+}
+
+.stats{
+color:#777;
+font-size:13px;
+margin-top:10px;
+}
+
+.actions{
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+margin-top:10px;
+border-top:1px solid #eee;
+padding-top:10px;
+}
+
+.actions button{
+border:0;
+background:#f1f1f1;
+padding:8px 12px;
+border-radius:20px;
+}
+
+.actions button.liked{
+background:#ffe3ea;
+color:#e83e8c;
+}
+
+.comment-box{
+display:none;
+margin-top:10px;
+}
+
+.comment-box input{
+width:100%;
+padding:10px;
+border:1px solid #ddd;
+border-radius:20px;
+}
+
+.comments-list{margin-top:10px}
+
+.comment-item{
+background:#f5f5f5;
+border-radius:12px;
+padding:8px 10px;
+margin-top:6px;
+font-size:13px;
+}
+
+.comment-item b{color:#5b35f5}
+
+.search-box{
+width:100%;
+padding:14px;
+border:1px solid #ddd;
+border-radius:25px;
+}
+
+.profile{text-align:center}
+
+.profile-avatar{
+width:95px;
+height:95px;
+margin:auto;
+border-radius:50%;
+background:linear-gradient(135deg,#5b35f5,#e83e8c);
+color:white;
+display:grid;
+place-items:center;
+font-size:40px;
+font-weight:bold;
+}
+
+.menu{
+display:flex;
+align-items:center;
+gap:12px;
+padding:14px 5px;
+border-bottom:1px solid #eee;
+font-size:16px;
+cursor:pointer;
+}
+
+.menu:last-child{border-bottom:0}
+
+.menu:hover{
+background:#f7f5ff;
+}
+
+.menu-icon{
+font-size:24px;
+width:35px;
+text-align:center;
+}
+
+.menu-arrow{
+margin-left:auto;
+color:#999;
+font-size:20px;
+}
+
+.chat{
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px 0;
+border-bottom:1px solid #eee;
+}
+
+.chat-info{flex:1}
+
+.group{
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px 0;
+border-bottom:1px solid #eee;
+}
+
+.badge{
+background:#e83e8c;
+color:white;
+font-size:11px;
+padding:3px 7px;
+border-radius:20px;
+}
+
+.notification{
+padding:12px 0;
+border-bottom:1px solid #eee;
+}
+
+.bottomnav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:68px;
+background:white;
+display:flex;
+justify-content:space-around;
+align-items:center;
+box-shadow:0 -3px 12px #0002;
+z-index:100;
+}
+
+.bottomnav button{
+border:0;
+background:none;
+font-size:20px;
+color:#777;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:3px;
+}
+
+.bottomnav button span{
+font-size:10px;
+}
+
+.bottomnav button.active{
+color:#5b35f5;
+font-weight:bold;
+}
+
+.logout{
+width:100%;
+border:0;
+background:#e53935;
+color:white;
+padding:13px;
+border-radius:25px;
+font-weight:bold;
+}
+
+.empty{
+text-align:center;
+padding:35px;
+color:#777;
+}
+
+.firebase-status{
+text-align:center;
+font-size:12px;
+color:#777;
+margin:5px 0 12px;
+}
+
+.real-post{
+border-left:3px solid #5b35f5;
+}
+
+/* SETTINGS */
+
+.settings-page{
+display:none;
+}
+
+.settings-page.active{
+display:block;
+}
+
+.settings-header{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:15px;
+}
+
+.back-btn{
+border:0;
+background:#eeeaff;
+color:#5b35f5;
+width:40px;
+height:40px;
+border-radius:50%;
+font-size:20px;
+}
+
+.settings-title{
+margin:0;
+}
+
+.settings-section-title{
+font-size:13px;
+font-weight:bold;
+color:#777;
+text-transform:uppercase;
+margin:18px 5px 7px;
+}
+
+.setting-row{
+display:flex;
+align-items:center;
+padding:15px 5px;
+border-bottom:1px solid #eee;
+cursor:pointer;
+}
+
+.setting-row:last-child{
+border-bottom:0;
+}
+
+.setting-row:hover{
+background:#f8f7ff;
+}
+
+.setting-icon{
+font-size:23px;
+width:42px;
+}
+
+.setting-info{
+flex:1;
+}
+
+.setting-info b{
+display:block;
+font-size:15px;
+}
+
+.setting-info small{
+color:#777;
+font-size:12px;
+}
+
+.setting-arrow{
+font-size:20px;
+color:#aaa;
+}
+
+.danger{
+color:#e53935;
+}
+
+.about-box{
+text-align:left;
+line-height:1.6;
+}
+
+.about-logo{
+width:75px;
+height:75px;
+margin:0 auto 12px;
+border-radius:22px;
+background:linear-gradient(135deg,#5b35f5,#e83e8c);
+color:white;
+display:grid;
+place-items:center;
+font-size:38px;
+font-weight:900;
+}
+
+.policy-text{
+font-size:14px;
+line-height:1.6;
+color:#555;
+text-align:left;
+}
+
+.toggle{
+width:46px;
+height:25px;
+border:0;
+border-radius:20px;
+background:#ccc;
+position:relative;
+}
+
+.toggle.on{
+background:#5b35f5;
+}
+
+.toggle:after{
+content:"";
+position:absolute;
+width:19px;
+height:19px;
+border-radius:50%;
+background:white;
+top:3px;
+left:3px;
+transition:.2s;
+}
+
+.toggle.on:after{
+left:24px;
+}
+
+@media(max-width:480px){
+.container{
+padding:10px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">MAITRI</div>
+
+<div class="header-buttons">
+<button onclick="showPage('search')">🔍</button>
+<button onclick="showPage('notifications')">🔔</button>
+<button onclick="showPage('profile')">👤</button>
+</div>
+</header>
+
+<div class="topnav">
+
+<button class="active" onclick="showPage('home',this)">
+🏠 Home
+</button>
+
+<button onclick="showPage('reels',this)">
+🎬 Reels
+</button>
+
+<button onclick="showPage('videos',this)">
+🎥 Videos
+</button>
+
+<button onclick="showPage('messages',this)">
+💬 Messages
+</button>
+
+<button onclick="showPage('groups',this)">
+👥 Groups
+</button>
+
+</div>
+
+<div class="container">
+
+<!-- HOME -->
+
+<div id="home" class="page active">
+
+<div class="stories">
+
+<div class="story">
+<div class="story-img">+</div>
+<small>Your Story</small>
+</div>
+
+<div class="story">
+<div class="story-img">R</div>
+<small>Rahul</small>
+</div>
+
+<div class="story">
+<div class="story-img">P</div>
+<small>Priti</small>
+</div>
+
+<div class="story">
+<div class="story-img">A</div>
+<small>Amit</small>
+</div>
+
+</div>
+
+<div class="card create">
+
+<input id="postText"
+placeholder="What's on your mind?">
+
+<button class="primary"
+onclick="createPost()">
+Post
+</button>
+
+</div>
+
+<div class="firebase-status" id="firebaseStatus">
+📡 MAITRI Firebase loading...
+</div>
+
+<div id="feed">
+
+<div class="card">
+
+<div class="post-head">
+
+<div class="avatar">R</div>
+
+<div>
+<b>Rahul</b><br>
+<small>Just now</small>
+</div>
+
+</div>
+
+<p>Hello MAITRI 👋</p>
+
+<div class="post-image">
+🌄
+</div>
+
+<div class="stats">
+
+<span class="likes">12</span> Likes
+&nbsp; • &nbsp;
+
+<span class="comments">3</span> Comments
+&nbsp; • &nbsp;
+
+👁️ <span class="views">48</span> Views
+
+</div>
+
+<div class="actions">
+
+<button onclick="like(this)">
+❤️ Like
+</button>
+
+<button onclick="comment(this)">
+💬 Comment
+</button>
+
+<button onclick="sharePost()">
+↗️ Share
+</button>
+
+<button onclick="save(this)">
+🔖 Save
+</button>
+
+</div>
+
+<div class="comment-box">
+
+<input
+placeholder="Write a comment..."
+onkeydown="sendComment(event,this)">
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="post-head">
+
+<div class="avatar">P</div>
+
+<div>
+<b>Priti</b><br>
+<small>10 min ago</small>
+</div>
+
+</div>
+
+<p>Welcome to MAITRI ❤️</p>
+
+<div class="post-image">
+📸
+</div>
+
+<div class="stats">
+
+<span class="likes">25</span> Likes
+&nbsp; • &nbsp;
+
+<span class="comments">6</span> Comments
+&nbsp; • &nbsp;
+
+👁️ <span class="views">91</span> Views
+
+</div>
+
+<div class="actions">
+
+<button onclick="like(this)">
+❤️ Like
+</button>
+
+<button onclick="comment(this)">
+💬 Comment
+</button>
+
+<button onclick="sharePost()">
+↗️ Share
+</button>
+
+<button onclick="save(this)">
+🔖 Save
+</button>
+
+</div>
+
+<div class="comment-box">
+
+<input
+placeholder="Write a comment..."
+onkeydown="sendComment(event,this)">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- REELS -->
+
+<div id="reels" class="page">
+
+<div class="card">
+
+<h2>🎬 MAITRI Reels</h2>
+
+<div class="post-image">
+▶️
+</div>
+
+<p>Short videos and Reels.</p>
+
+<button class="primary"
+onclick="alert('Reel upload feature लवकरच जोडू')">
+＋ Create Reel
+</button>
+
+</div>
+
+</div>
+
+<!-- VIDEOS -->
+
+<div id="videos" class="page">
+
+<div class="card">
+
+<h2>🎥 MAITRI Videos</h2>
+
+<div class="post-image">
+🎥
+</div>
+
+<p>Long videos will appear here.</p>
+
+<button class="primary"
+onclick="alert('Video upload feature लवकरच जोडू')">
+＋ Upload Video
+</button>
+
+</div>
+
+</div>
+
+<!-- MESSAGES -->
+
+<div id="messages" class="page">
+
+<div class="card">
+
+<h2>💬 Messages</h2>
+
+<div class="chat">
+
+<div class="avatar">P</div>
+
+<div class="chat-info">
+<b>Priti</b><br>
+<small>Hi ❤️</small>
+</div>
+
+<span class="badge">2</span>
+
+</div>
+
+<div class="chat">
+
+<div class="avatar">R</div>
+
+<div class="chat-info">
+<b>Rahul</b><br>
+<small>Hello Bhushan</small>
+</div>
+
+</div>
+
+<div class="chat">
+
+<div class="avatar">A</div>
+
+<div class="chat-info">
+<b>Amit</b><br>
+<small>See you tomorrow</small>
+</div>
+
+</div>
+
+<button
+class="primary"
+style="margin-top:15px;width:100%"
+onclick="alert('New chat feature लवकरच जोडू')">
+
+＋ New Message
+
+</button>
+
+</div>
+
+</div>
+
+<!-- GROUPS -->
+
+<div id="groups" class="page">
+
+<div class="card">
+
+<h2>👥 Groups</h2>
+
+<div class="group">
+
+<div class="avatar">M</div>
+
+<div class="chat-info">
+<b>MAITRI Friends</b><br>
+<small>12 members</small>
+</div>
+
+</div>
+
+<div class="group">
+
+<div class="avatar">W</div>
+
+<div class="chat-info">
+<b>Waluj Friends</b><br>
+<small>25 members</small>
+</div>
+
+</div>
+
+<div class="group">
+
+<div class="avatar">F</div>
+
+<div class="chat-info">
+<b>Family Group</b><br>
+<small>8 members</small>
+</div>
+
+</div>
+
+<button
+class="primary"
+style="margin-top:15px;width:100%"
+onclick="alert('Create Group feature लवकरच जोडू')">
+
+＋ Create Group
+
+</button>
+
+</div>
+
+</div>
+
+<!-- SEARCH -->
+
+<div id="search" class="page">
+
+<div class="card">
+
+<h2>🔍 Search</h2>
+
+<input
+class="search-box"
+id="searchInput"
+placeholder="Search people or posts..."
+oninput="search()">
+
+<div id="searchResult" class="empty">
+Search something...
+</div>
+
+</div>
+
+</div>
+
+<!-- NOTIFICATIONS -->
+
+<div id="notifications" class="page">
+
+<div class="card">
+
+<h2>🔔 Notifications</h2>
+
+<div class="notification">
+❤️ <b>Priti</b> liked your post.
+<br>
+<small>2 minutes ago</small>
+</div>
+
+<div class="notification">
+💬 <b>Rahul</b> commented on your post.
+<br>
+<small>10 minutes ago</small>
+</div>
+
+<div class="notification">
+👥 <b>Amit</b> started following you.
+<br>
+<small>20 minutes ago</small>
+</div>
+
+<div class="notification">
+↗️ Your post was shared.
+<br>
+<small>1 hour ago</small>
+</div>
+
+</div>
+
+</div>
+
+<!-- PROFILE -->
+
+<div id="profile" class="page">
+
+<div class="card profile">
+
+<div class="profile-avatar" id="profileAvatar">
+M
+</div>
+
+<h2 id="profileName">
+Loading...
+</h2>
+
+<p id="profileEmail">
+Loading...
+</p>
+
+<p>
+👥 <b>0</b> Followers
+&nbsp;&nbsp;
+👤 <b>0</b> Following
+</p>
+
+<button class="primary"
+onclick="alert('Edit Profile feature लवकरच जोडू')">
+
+✏️ Edit Profile
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>📊 Your Activity</h3>
+
+<p>📝 Posts: <span id="myPosts">0</span></p>
+
+<p>❤️ Likes: 0</p>
+
+<p>💬 Comments: 0</p>
+
+<p>👁️ Views: 0</p>
+
+</div>
+
+<!-- SETTINGS -->
+
+<div class="card">
+
+<h3>⚙️ Settings</h3>
+
+<div class="menu"
+onclick="openSettings('privacy')">
+
+<div class="menu-icon">🔒</div>
+
+<div class="setting-info">
+<b>Privacy</b>
+<small>Control your privacy and account visibility</small>
+</div>
+
+<div class="menu-arrow">›</div>
+
+</div>
+
+<div class="menu"
+onclick="openSettings('notifications')">
+
+<div class="menu-icon">🔔</div>
+
+<div class="setting-info">
+<b>Notification Settings</b>
+<small>Manage MAITRI notifications</small>
+</div>
+
+<div class="menu-arrow">›</div>
+
+</div>
+
+<div class="menu"
+onclick="openSettings('appearance')">
+
+<div class="menu-icon">🌙</div>
+
+<div class="setting-info">
+<b>Appearance</b>
+<small>Light or dark appearance</small>
+</div>
+
+<div class="menu-arrow">›</div>
+
+</div>
+
+<div class="menu"
+onclick="openSettings('about')">
+
+<div class="menu-icon">ℹ️</div>
+
+<div class="setting-info">
+<b>About MAITRI</b>
+<small>Founder, project and legal information</small>
+</div>
+
+<div class="menu-arrow">›</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<button class="logout"
+onclick="logout()">
+🚪 Logout
+</button>
+
+</div>
+
+</div>
+
+<!-- SETTINGS MAIN -->
+
+<div id="settings" class="settings-page">
+
+<div class="settings-header">
+
+<button class="back-btn"
+onclick="closeSettings()">
+‹
+</button>
+
+<h2 class="settings-title">
+⚙️ Settings
+</h2>
+
+</div>
+
+<div class="card">
+
+<div class="settings-section-title">
+Account
+</div>
+
+<div class="setting-row"
+onclick="settingInfo('Account')">
+
+<div class="setting-icon">👤</div>
+
+<div class="setting-info">
+<b>Account</b>
+<small>Profile and account information</small>
+</div>
+
+<div class="setting-arrow">›</div>
+
+</div>
+
+<div class="setting-row"
+onclick="settingInfo('Edit Profile')">
+
+<div class="setting-icon">✏️</div>
+
+<div class="setting-info">
+<b>Edit Profile</b>
+<small>Change your profile information</small>
+</div>
+
+<div class="setting-arrow">›</div>
+
+</div>
+
+<div class="settings-section-title">
+Privacy
+</div>
+
+<div class="setting-row"
+onclick="openSettings('privacy')">
+
+<div class="setting-icon">🔒</div>
+
+<div class="setting-info">
+<b>Privacy</b>
+<small>Manage account privacy</small>
+</div>
+
+<div class="setting-arrow">›</div>
+
+</div>
+
+<div class="settings-section-title">
+Notifications
+</div>
+
+<div class="setting-row"
+onclick="openSettings('notifications')">
+
+<div class="setting-icon">🔔</div>
+
+<div class="setting-info">
+<b>Notifications</b>
+<small>Manage notification preferences</small>
+</div>
+
+<div class="setting-arrow">›</div>
+
+</div>
+
+<div class="settings-section-title">
+Appearance
+</div>
+
+<div class="setting-row"
+onclick="openSettings('appearance')">
+
+<div class="setting-icon">🌙</div>
+
+<div class="setting-info">
+<b>Appearance</b>
+<small>Choose app appearance</small>
+</div>
+
+<div class="setting-arrow">›</div>
+
+</div>
+
+<div class="settings-section-title">
+More
+</div>
+
+<div class="setting-row"
+onclick="settingInfo('Language')">
+
+<div class="setting-icon">🌐</div>
+
+<div class="setting-info">
+<b>Language</b>
+<small>Choose MAITRI language</small>
+</div>
+
+<div class="setting-arrow">›</div>
+
+</div>
+
+<div class="setting-row"
+onclick="settingInfo('Blocked Users')">
+
+<div class="setting-icon">🚫</div>
+
+<div class="setting-info">
+<b>Blocked Users</b>
+<small>Manage blocked accounts</small>
+</div>
+
+<div class="setting-arrow">›</div>
+
+</div>
+
+<div class="setting-row"
+onclick="settingInfo('Data & Storage')">
+
+<div class="setting-icon">💾</div>
+
+<div class="setting-info">
+<b>Data & Storage</b>
+<small>Manage data and storage</small>
+</div>
+
+<div class="setting-arrow">›</div>
+
+</div>
+
+<div class="setting-row"
+onclick="openSettings('policy')">
+
+<div class="setting-icon">📄</div>
+
+<div class="setting-info">
+<b>Privacy Policy</b>
+<small>Read MAITRI Privacy Policy</small>
+</div>
+
+<div class="setting-arrow">›</div>
+
+</div>
+
+<div class="setting-row"
+onclick="openSettings('terms')">
+
+<div class="setting-icon">📜</div>
+
+<div class="setting-info">
+<b>Terms & Conditions</b>
+<small>MAITRI terms of use</small>
+</div>
+
+<div class="setting-arrow">›</div>
+
+</div>
+
+<div class="setting-row"
+onclick="openSettings('about')">
+
+<div class="setting-icon">ℹ️</div>
+
+<div class="setting-info">
+<b>About MAITRI</b>
+<small>Founder and project information</small>
+</div>
+
+<div class="setting-arrow">›</div>
+
+</div>
+
+<div class="setting-row"
+onclick="deleteAccountInfo()">
+
+<div class="setting-icon danger">⚠️</div>
+
+<div class="setting-info danger">
+<b>Delete Account</b>
+<small>Account deletion information</small>
+</div>
+
+<div class="setting-arrow">›</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<button class="logout"
+onclick="logout()">
+🚪 Logout
+</button>
+
+</div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+</div>
+
+<div class="bottomnav">
+
+<button class="active"
+onclick="bottomPage('home',this)">
+🏠
+<span>Home</span>
+</button>
+
+<button
+onclick="bottomPage('reels',this)">
+🎬
+<span>Reels</span>
+</button>
+
+<button
+onclick="bottomPage('videos',this)">
+🎥
+<span>Videos</span>
+</button>
+
+<button
+onclick="bottomPage('messages',this)">
+💬
+<span>Message</span>
+</button>
+
+<button
+onclick="bottomPage('groups',this)">
+👥
+<span>Groups</span>
+</button>
+
+<button
+onclick="bottomPage('profile',this)">
+👤
+<span>Profile</span>
+</button>
+
+</div><!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+let currentUser = null;
+let viewedPosts = {};
+
+function safeText(text){
+return String(text || "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+}
+
+
+/* LOGIN CHECK */
+
+auth.onAuthStateChanged(function(user){
+
+if(!user){
+
+window.location.href="login.html";
+return;
+
+}
+
+currentUser=user;
+
+let name=user.displayName || "MAITRI User";
+let email=user.email || "";
+
+document.getElementById("profileName").textContent=name;
+document.getElementById("profileEmail").textContent=email;
+
+document.getElementById("profileAvatar").textContent=
+name.charAt(0).toUpperCase();
+
+document.getElementById("firebaseStatus").textContent=
+"🟢 MAITRI Firebase Connected";
+
+loadPosts();
+
+});
+
+
+/* PAGE SYSTEM */
+
+function showPage(page,button){
+
+document.querySelectorAll(".page").forEach(function(p){
+
+p.classList.remove("active");
+
+});
+
+let selected=document.getElementById(page);
+
+if(selected){
+
+selected.classList.add("active");
+
+}
+
+document.getElementById("settings").classList.remove("active");
+
+
+document.querySelectorAll(".topnav button").forEach(function(b){
+
+b.classList.remove("active");
+
+});
+
+if(button){
+
+button.classList.add("active");
+
+}
+
+window.scrollTo(0,0);
+
+}
+
+
+/* BOTTOM NAV */
+
+function bottomPage(page,button){
+
+showPage(page);
+
+document.querySelectorAll(".bottomnav button").forEach(function(b){
+
+b.classList.remove("active");
+
+});
+
+if(button){
+
+button.classList.add("active");
+
+}
+
+}
+
+
+/* CREATE POST */
+
+function createPost(){
+
+let input=document.getElementById("postText");
+
+let text=input.value.trim();
+
+if(!text){
+
+alert("कृपया काहीतरी लिहा.");
+
+return;
+
+}
+
+if(!currentUser){
+
+alert("Login करा.");
+
+return;
+
+}
+
+db.collection("posts").add({
+
+uid:currentUser.uid,
+
+name:currentUser.displayName || "MAITRI User",
+
+email:currentUser.email || "",
+
+text:text,
+
+type:"text",
+
+likes:0,
+
+comments:0,
+
+views:0,
+
+createdAt:firebase.firestore.FieldValue.serverTimestamp()
+
+})
+
+.then(function(){
+
+input.value="";
+
+alert("✅ Post successfully created!");
+
+})
+
+.catch(function(error){
+
+console.log(error);
+
+alert("❌ Post तयार करता आला नाही.");
+
+});
+
+}
+
+
+/* LOAD POSTS */
+
+function loadPosts(){
+
+db.collection("posts")
+.orderBy("createdAt","desc")
+.onSnapshot(function(snapshot){
+
+document.querySelectorAll(".real-post").forEach(function(post){
+
+post.remove();
+
+});
+
+snapshot.forEach(function(doc){
+
+let data=doc.data();
+
+renderPost(doc.id,data);
+
+});
+
+updateMyPostCount();
+
+},function(error){
+
+console.log(error);
+
+});
+
+}
+
+
+/* RENDER REAL POST */
+
+function renderPost(id,data){
+
+let feed=document.getElementById("feed");
+
+let div=document.createElement("div");
+
+div.className="card real-post";
+
+let name=safeText(data.name || "MAITRI User");
+
+let text=safeText(data.text || "");
+
+let firstLetter=
+(data.name || "M").charAt(0).toUpperCase();
+
+let time=formatTime(data.createdAt);
+
+div.innerHTML=`
+
+<div class="post-head">
+
+<div class="avatar">
+${safeText(firstLetter)}
+</div>
+
+<div>
+<b>${name}</b><br>
+<small>${time}</small>
+</div>
+
+</div>
+
+<p>${text}</p>
+
+<div class="stats">
+
+<span class="likes">
+${data.likes || 0}
+</span>
+ Likes
+
+&nbsp; • &nbsp;
+
+<span class="comments">
+${data.comments || 0}
+</span>
+ Comments
+
+&nbsp; • &nbsp;
+
+👁️
+
+<span class="views">
+${data.views || 0}
+</span>
+ Views
+
+</div>
+
+<div class="actions">
+
+<button
+onclick="likeRealPost('${id}',this)">
+❤️ Like
+</button>
+
+<button
+onclick="commentRealPost(this)">
+💬 Comment
+</button>
+
+<button
+onclick="shareRealPost('${id}')">
+↗️ Share
+</button>
+
+<button
+onclick="saveRealPost('${id}',this)">
+🔖 Save
+</button>
+
+</div>
+
+<div class="comment-box">
+
+<input
+placeholder="Write a comment..."
+onkeydown="sendRealComment(event,this,'${id}')">
+
+</div>
+
+<div
+class="comments-list"
+id="comments-${id}">
+</div>
+
+`;
+
+feed.prepend(div);
+
+checkLikeStatus(id,div);
+
+registerView(id);
+
+loadComments(id);
+
+}
+
+
+/* TIME */
+
+function formatTime(timestamp){
+
+if(!timestamp){
+
+return "Just now";
+
+}
+
+let date=timestamp.toDate();
+
+let now=new Date();
+
+let diff=Math.floor((now-date)/1000);
+
+if(diff<60){
+
+return "Just now";
+
+}
+
+if(diff<3600){
+
+return Math.floor(diff/60)+" min ago";
+
+}
+
+if(diff<86400){
+
+return Math.floor(diff/3600)+" hr ago";
+
+}
+
+return date.toLocaleDateString();
+
+}
+
+
+/* MY POST COUNT */
+
+function updateMyPostCount(){
+
+if(!currentUser){
+
+return;
+
+}
+
+db.collection("posts")
+.where("uid","==",currentUser.uid)
+.get()
+.then(function(snapshot){
+
+document.getElementById("myPosts").textContent=
+snapshot.size;
+
+})
+.catch(function(error){
+
+console.log(error);
+
+});
+
+}
+
+
+/* DEMO LIKE */
+
+function like(button){
+
+button.classList.toggle("liked");
+
+let card=button.closest(".card");
+
+let likes=card.querySelector(".likes");
+
+let value=parseInt(likes.textContent) || 0;
+
+if(button.classList.contains("liked")){
+
+value++;
+
+button.innerHTML="❤️ Liked";
+
+}else{
+
+value--;
+
+button.innerHTML="❤️ Like";
+
+}
+
+likes.textContent=value;
+
+}
+
+
+/* REAL POST LIKE */
+
+function likeRealPost(postId,button){
+
+if(!currentUser){
+
+return;
+
+}
+
+let likeRef=
+db.collection("posts")
+.doc(postId)
+.collection("likes")
+.doc(currentUser.uid);
+
+let postRef=
+db.collection("posts")
+.doc(postId);
+
+db.runTransaction(function(transaction){
+
+return transaction.get(likeRef)
+.then(function(likeDoc){
+
+if(likeDoc.exists){
+
+transaction.delete(likeRef);
+
+transaction.update(postRef,{
+
+likes:firebase.firestore.FieldValue.increment(-1)
+
+});
+
+button.classList.remove("liked");
+
+button.innerHTML="❤️ Like";
+
+}else{
+
+transaction.set(likeRef,{
+
+uid:currentUser.uid,
+
+createdAt:
+firebase.firestore.FieldValue.serverTimestamp()
+
+});
+
+transaction.update(postRef,{
+
+likes:firebase.firestore.FieldValue.increment(1)
+
+});
+
+button.classList.add("liked");
+
+button.innerHTML="❤️ Liked";
+
+}
+
+});
+
+})
+.catch(function(error){
+
+console.log(error);
+
+});
+
+}
+
+
+/* CHECK LIKE */
+
+function checkLikeStatus(postId,card){
+
+if(!currentUser){
+
+return;
+
+}
+
+db.collection("posts")
+.doc(postId)
+.collection("likes")
+.doc(currentUser.uid)
+.get()
+.then(function(doc){
+
+let button=card.querySelector(".actions button");
+
+if(doc.exists && button){
+
+button.classList.add("liked");
+
+button.innerHTML="❤️ Liked";
+
+}
+
+});
+
+}
+
+
+/* DEMO COMMENT */
+
+function comment(button){
+
+let card=button.closest(".card");
+
+let box=card.querySelector(".comment-box");
+
+if(box.style.display==="block"){
+
+box.style.display="none";
+
+}else{
+
+box.style.display="block";
+
+}
+
+}
+
+
+/* REAL COMMENT OPEN */
+
+function commentRealPost(button){
+
+let card=button.closest(".card");
+
+let box=card.querySelector(".comment-box");
+
+if(box.style.display==="block"){
+
+box.style.display="none";
+
+}else{
+
+box.style.display="block";
+
+let input=box.querySelector("input");
+
+if(input){
+
+input.focus();
+
+}
+
+}
+
+}
+
+
+/* DEMO SEND COMMENT */
+
+function sendComment(event,input){
+
+if(event.key!=="Enter"){
+
+return;
+
+}
+
+let text=input.value.trim();
+
+if(!text){
+
+return;
+
+}
+
+let card=input.closest(".card");
+
+let list=card.querySelector(".comments-list");
+
+let item=document.createElement("div");
+
+item.className="comment-item";
+
+item.innerHTML=
+"<b>You</b>: "+safeText(text);
+
+list.appendChild(item);
+
+input.value="";
+
+let count=card.querySelector(".comments");
+
+if(count){
+
+count.textContent=
+(parseInt(count.textContent)||0)+1;
+
+}
+
+}
+
+
+/* REAL COMMENT */
+
+function sendRealComment(event,input,postId){
+
+if(event.key!=="Enter"){
+
+return;
+
+}
+
+let text=input.value.trim();
+
+if(!text){
+
+return;
+
+}
+
+if(!currentUser){
+
+return;
+
+}
+
+let postRef=
+db.collection("posts").doc(postId);
+
+let commentRef=
+postRef.collection("comments").doc();
+
+db.runTransaction(function(transaction){
+
+return transaction.get(postRef)
+.then(function(doc){
+
+if(!doc.exists){
+
+throw new Error("Post not found");
+
+}
+
+transaction.set(commentRef,{
+
+uid:currentUser.uid,
+
+name:currentUser.displayName || "MAITRI User",
+
+email:currentUser.email || "",
+
+text:text,
+
+createdAt:
+firebase.firestore.FieldValue.serverTimestamp()
+
+});
+
+transaction.update(postRef,{
+
+comments:
+firebase.firestore.FieldValue.increment(1)
+
+});
+
+});
+
+})
+.then(function(){
+
+input.value="";
+
+})
+.catch(function(error){
+
+console.log(error);
+
+alert("❌ Comment पाठवता आला नाही.");
+
+});
+
+}
+
+
+/* LOAD COMMENTS */
+
+function loadComments(postId){
+
+let list=
+document.getElementById("comments-"+postId);
+
+if(!list){
+
+return;
+
+}
+
+db.collection("posts")
+.doc(postId)
+.collection("comments")
+.orderBy("createdAt","asc")
+.onSnapshot(function(snapshot){
+
+list.innerHTML="";
+
+snapshot.forEach(function(doc){
+
+let data=doc.data();
+
+let item=document.createElement("div");
+
+item.className="comment-item";
+
+item.innerHTML=
+
+"<b>"+
+safeText(data.name || "User")+
+"</b>: "+
+safeText(data.text || "");
+
+list.appendChild(item);
+
+});
+
+});
+
+}
+
+
+/* REGISTER VIEW */
+
+function registerView(postId){
+
+if(!currentUser){
+
+return;
+
+}
+
+let key=
+postId+"_"+currentUser.uid;
+
+if(viewedPosts[key]){
+
+return;
+
+}
+
+viewedPosts[key]=true;
+
+let postRef=
+db.collection("posts").doc(postId);
+
+postRef.update({
+
+views:
+firebase.firestore.FieldValue.increment(1)
+
+})
+.catch(function(error){
+
+console.log(error);
+
+});
+
+}
+
+
+/* DEMO SHARE */
+
+function sharePost(){
+
+if(navigator.share){
+
+navigator.share({
+
+title:"MAITRI",
+
+text:"Check this post on MAITRI"
+
+}).catch(function(){});
+
+}else{
+
+alert("📤 Share option तयार आहे.");
+
+}
+
+}
+
+
+/* REAL SHARE */
+
+function shareRealPost(postId){
+
+let url=
+window.location.href+"#post-"+postId;
+
+if(navigator.share){
+
+navigator.share({
+
+title:"MAITRI Post",
+
+text:"Check this MAITRI post",
+
+url:url
+
+}).catch(function(){});
+
+}else{
+
+navigator.clipboard.writeText(url)
+.then(function(){
+
+alert("✅ Post link copied!");
+
+})
+.catch(function(){
+
+alert("📤 Share link तयार आहे.");
+
+});
+
+}
+
+}
+
+
+/* DEMO SAVE */
+
+function save(button){
+
+button.classList.toggle("liked");
+
+if(button.classList.contains("liked")){
+
+button.innerHTML="🔖 Saved";
+
+}else{
+
+button.innerHTML="🔖 Save";
+
+}
+
+}
+
+
+/* REAL SAVE */
+
+function saveRealPost(postId,button){
+
+button.classList.toggle("liked");
+
+if(button.classList.contains("liked")){
+
+button.innerHTML="🔖 Saved";
+
+}else{
+
+button.innerHTML="🔖 Save";
+
+}
+
+}
+
+
+/* SEARCH */
+
+function search(){
+
+let input=
+document.getElementById("searchInput").value
+.trim()
+.toLowerCase();
+
+let result=
+document.getElementById("searchResult");
+
+if(!input){
+
+result.innerHTML="Search something...";
+
+return;
+
+}
+
+db.collection("posts")
+.get()
+.then(function(snapshot){
+
+let found=[];
+
+snapshot.forEach(function(doc){
+
+let data=doc.data();
+
+let name=
+(data.name || "").toLowerCase();
+
+let text=
+(data.text || "").toLowerCase();
+
+if(name.includes(input) ||
+text.includes(input)){
+
+found.push(data);
+
+}
+
+});
+
+if(found.length===0){
+
+result.innerHTML=
+"😔 Nothing found.";
+
+return;
+
+}
+
+result.innerHTML="";
+
+found.forEach(function(data){
+
+let item=document.createElement("div");
+
+item.className="card";
+
+item.innerHTML=
+
+"<b>"+
+safeText(data.name || "User")+
+"</b><p>"+
+safeText(data.text || "")+
+"</p>";
+
+result.appendChild(item);
+
+});
+
+})
+.catch(function(error){
+
+console.log(error);
+
+result.innerHTML=
+"❌ Search failed.";
+
+});
+
+}/* SETTINGS SYSTEM */
+
+function openSettings(section){
+
+document.querySelectorAll(".page").forEach(function(page){
+
+page.classList.remove("active");
+
+});
+
+document.getElementById("settings").classList.add("active");
+
+window.scrollTo(0,0);
+
+if(section){
+
+setTimeout(function(){
+
+showSettingSection(section);
+
+},50);
+
+}
+
+}
+
+
+/* CLOSE SETTINGS */
+
+function closeSettings(){
+
+document.getElementById("settings").classList.remove("active");
+
+document.getElementById("profile").classList.add("active");
+
+window.scrollTo(0,0);
+
+}
+
+
+/* SETTING INFORMATION */
+
+function settingInfo(title){
+
+if(title==="Account"){
+
+alert(
+"👤 Account\n\n"+
+"Your MAITRI account information will be managed here.\n\n"+
+"Advanced account controls will be added in future updates."
+);
+
+return;
+
+}
+
+if(title==="Edit Profile"){
+
+alert(
+"✏️ Edit Profile\n\n"+
+"Profile name, photo, bio and other profile information can be changed here.\n\n"+
+"Profile editing will be added in a future update."
+);
+
+return;
+
+}
+
+if(title==="Language"){
+
+alert(
+"🌐 Language\n\n"+
+"MAITRI language selection will be added here.\n\n"+
+"Future versions can support multiple languages."
+);
+
+return;
+
+}
+
+if(title==="Blocked Users"){
+
+alert(
+"🚫 Blocked Users\n\n"+
+"You will be able to view and manage blocked accounts here.\n\n"+
+"This feature will be added in a future update."
+);
+
+return;
+
+}
+
+if(title==="Data & Storage"){
+
+alert(
+"💾 Data & Storage\n\n"+
+"MAITRI data and storage controls will appear here.\n\n"+
+"Photo/video cloud storage will be added later."
+);
+
+return;
+
+}
+
+}
+
+
+/* SETTINGS SECTION MESSAGE */
+
+function showSettingSection(section){
+
+if(section==="privacy"){
+
+alert(
+"🔒 Privacy Settings\n\n"+
+"Future privacy controls will include:\n\n"+
+"• Account visibility\n"+
+"• Who can see your posts\n"+
+"• Who can comment\n"+
+"• Who can message you\n"+
+"• Blocked users\n"+
+"• Activity visibility\n\n"+
+"Advanced privacy controls will be added in future updates."
+);
+
+return;
+
+}
+
+
+if(section==="notifications"){
+
+alert(
+"🔔 Notification Settings\n\n"+
+"Future controls will include:\n\n"+
+"• Likes\n"+
+"• Comments\n"+
+"• Followers\n"+
+"• Messages\n"+
+"• Groups\n"+
+"• Reels\n"+
+"• Videos\n\n"+
+"Notification controls will be expanded in future updates."
+);
+
+return;
+
+}
+
+
+if(section==="appearance"){
+
+let dark=
+localStorage.getItem("maitriDarkMode")==="true";
+
+let choice=
+confirm(
+"🌙 Appearance\n\n"+
+"Press OK for Dark Mode.\n"+
+"Press Cancel for Light Mode."
+);
+
+if(choice){
+
+document.body.style.background="#111";
+
+document.body.style.color="#fff";
+
+localStorage.setItem("maitriDarkMode","true");
+
+alert("🌙 Dark Mode ON");
+
+}else{
+
+document.body.style.background="#f3f4f6";
+
+document.body.style.color="#222";
+
+localStorage.setItem("maitriDarkMode","false");
+
+alert("☀️ Light Mode ON");
+
+}
+
+return;
+
+}
+
+
+if(section==="about"){
+
+alert(
+"ℹ️ ABOUT MAITRI\n\n"+
+"MAITRI\n"+
+"Connect • Share • Chat\n\n"+
+"Founder:\n"+
+"Bhushan Kamble\n\n"+
+"MAITRI is a social networking project focused on connecting people through posts, stories, reels, videos, messages and groups.\n\n"+
+"Founder participation:\n"+
+"Concept planning, product decisions, testing and development are being carried out with active Founder involvement.\n\n"+
+"Technology:\n"+
+"MAITRI uses web technologies and Firebase services for authentication and application data.\n\n"+
+"AI-assisted development support is used during the development process.\n\n"+
+"© MAITRI — All Rights Reserved\n\n"+
+"MAITRI brand, design, content and software are intended for the MAITRI project.\n\n"+
+"Legal documents such as Terms & Conditions, Privacy Policy and intellectual-property protections should be completed before public launch."
+);
+
+return;
+
+}
+
+
+if(section==="policy"){
+
+alert(
+"📄 MAITRI PRIVACY POLICY\n\n"+
+"MAITRI aims to respect user privacy.\n\n"+
+"Account information may include name and email address.\n\n"+
+"Posts, comments and other application data may be stored using Firebase services.\n\n"+
+"MAITRI should not collect information that is unnecessary for the application's intended functions.\n\n"+
+"Users should be informed about how their data is collected, used and stored.\n\n"+
+"This is a basic draft for the development version. A complete legal Privacy Policy should be prepared before Play Store publication."
+);
+
+return;
+
+}
+
+
+if(section==="terms"){
+
+alert(
+"📜 MAITRI TERMS & CONDITIONS\n\n"+
+"By using MAITRI, users agree to use the platform responsibly.\n\n"+
+"Users must not use MAITRI for illegal activities, harassment, fraud, impersonation or harmful content.\n\n"+
+"Users are responsible for content they publish.\n\n"+
+"MAITRI may update application features, rules and services over time.\n\n"+
+"This is a basic development draft. Final Terms & Conditions should be legally reviewed before public launch."
+);
+
+return;
+
+}
+
+}
+
+
+/* DELETE ACCOUNT INFORMATION */
+
+function deleteAccountInfo(){
+
+let answer=confirm(
+"⚠️ DELETE ACCOUNT\n\n"+
+"Account deletion is not active in this development version.\n\n"+
+"Do you want to continue?"
+);
+
+if(answer){
+
+alert(
+"ℹ️ Account deletion feature is planned for a future version.\n\n"+
+"Your Firebase account has NOT been deleted."
+);
+
+}
+
+}
+
+
+/* LOAD DARK MODE */
+
+function loadAppearance(){
+
+let dark=
+localStorage.getItem("maitriDarkMode")==="true";
+
+if(dark){
+
+document.body.style.background="#111";
+
+document.body.style.color="#fff";
+
+}
+
+}
+
+
+/* LOGOUT */
+
+function logout(){
+
+let answer=
+confirm("🚪 Do you want to logout from MAITRI?");
+
+if(!answer){
+
+return;
+
+}
+
+auth.signOut()
+.then(function(){
+
+window.location.href="login.html";
+
+})
+.catch(function(error){
+
+console.log(error);
+
+alert("❌ Logout failed.");
+
+});
+
+}
+
+
+/* START */
+
+loadAppearance();
+
+</script>
+
+</body>
+</html>

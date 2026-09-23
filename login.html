@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>MAITRI Login</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#5b35f5,#e83e8c);
+padding:20px;
+}
+
+.box{
+width:100%;
+max-width:390px;
+background:white;
+border-radius:25px;
+padding:30px 24px;
+box-shadow:0 15px 45px #0005;
+}
+
+.logo{
+width:70px;
+height:70px;
+margin:auto;
+border-radius:22px;
+background:linear-gradient(135deg,#5b35f5,#e83e8c);
+color:white;
+display:grid;
+place-items:center;
+font-size:35px;
+font-weight:900;
+}
+
+h1{
+text-align:center;
+margin:15px 0 5px;
+color:#5b35f5;
+}
+
+.sub{
+text-align:center;
+color:#777;
+margin-bottom:25px;
+}
+
+input{
+width:100%;
+padding:14px;
+margin:7px 0;
+border:1px solid #ddd;
+border-radius:12px;
+font-size:15px;
+}
+
+button{
+width:100%;
+border:0;
+font-weight:bold;
+cursor:pointer;
+}
+
+.login{
+margin-top:12px;
+padding:14px;
+border-radius:12px;
+background:#5b35f5;
+color:white;
+font-size:16px;
+}
+
+.register{
+margin-top:10px;
+padding:14px;
+border-radius:12px;
+background:#eeeaff;
+color:#4c2bd9;
+font-size:16px;
+}
+
+.forgot{
+margin-top:18px;
+background:none;
+color:#5b35f5;
+font-size:14px;
+}
+
+#msg{
+text-align:center;
+min-height:22px;
+margin-top:15px;
+font-size:14px;
+font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<div class="logo">M</div>
+
+<h1>MAITRI</h1>
+
+<div class="sub">
+Connect • Share • Chat
+</div>
+
+<input
+id="email"
+type="email"
+placeholder="Email address">
+
+<input
+id="password"
+type="password"
+placeholder="Password">
+
+<button
+class="login"
+onclick="loginUser()">
+
+🔐 Login
+
+</button>
+
+<button
+class="register"
+onclick="goRegister()">
+
+📝 Create New Account
+
+</button>
+
+<button
+class="forgot"
+onclick="forgotPassword()">
+
+Forgot Password?
+
+</button>
+
+<p id="msg"></p>
+
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+
+<script src="firebase-config.js"></script>
+
+
+<script>
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+
+
+function loginUser(){
+
+let email =
+document.getElementById("email").value.trim();
+
+let password =
+document.getElementById("password").value;
+
+let msg =
+document.getElementById("msg");
+
+
+if(!email || !password){
+
+msg.textContent =
+"❌ Email आणि Password भरा.";
+
+return;
+
+}
+
+
+msg.textContent =
+"🔐 Logging in...";
+
+
+auth.signInWithEmailAndPassword(
+email,
+password
+)
+
+.then(function(){
+
+msg.textContent =
+"✅ Login successful!";
+
+
+setTimeout(function(){
+
+window.location.href="index.html";
+
+},700);
+
+})
+
+
+.catch(function(error){
+
+console.log(error);
+
+msg.textContent =
+"❌ Email किंवा Password चुकीचा आहे.";
+
+});
+
+}
+
+
+function goRegister(){
+
+window.location.href="register.html";
+
+}
+
+
+function forgotPassword(){
+
+let email =
+document.getElementById("email").value.trim();
+
+let msg =
+document.getElementById("msg");
+
+
+if(!email){
+
+msg.textContent =
+"❌ आधी Email लिहा.";
+
+return;
+
+}
+
+
+msg.textContent =
+"📧 Reset email पाठवत आहे...";
+
+
+auth.sendPasswordResetEmail(email)
+
+.then(function(){
+
+msg.textContent =
+"✅ Password reset email पाठवला.";
+
+})
+
+.catch(function(error){
+
+console.log(error);
+
+msg.textContent =
+"❌ हा Email account मध्ये सापडला नाही.";
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

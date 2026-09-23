@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>MAITRI Register</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#5b35f5,#e83e8c);
+padding:20px;
+}
+
+.box{
+width:100%;
+max-width:390px;
+background:white;
+border-radius:25px;
+padding:30px 24px;
+box-shadow:0 15px 45px #0005;
+}
+
+.logo{
+width:70px;
+height:70px;
+margin:auto;
+border-radius:22px;
+background:linear-gradient(135deg,#5b35f5,#e83e8c);
+color:white;
+display:grid;
+place-items:center;
+font-size:35px;
+font-weight:900;
+}
+
+h1{
+text-align:center;
+color:#5b35f5;
+margin:15px 0 5px;
+}
+
+.sub{
+text-align:center;
+color:#777;
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:14px;
+margin:7px 0;
+border:1px solid #ddd;
+border-radius:12px;
+font-size:15px;
+}
+
+button{
+width:100%;
+border:0;
+padding:14px;
+border-radius:12px;
+font-weight:bold;
+font-size:16px;
+margin-top:10px;
+}
+
+.create{
+background:#5b35f5;
+color:white;
+}
+
+.back{
+background:#eeeaff;
+color:#4c2bd9;
+}
+
+#msg{
+text-align:center;
+min-height:22px;
+margin-top:15px;
+font-size:14px;
+font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<div class="logo">M</div>
+
+<h1>Create Account</h1>
+
+<div class="sub">
+Join MAITRI today ❤️
+</div>
+
+<input
+id="name"
+type="text"
+placeholder="Full Name">
+
+<input
+id="email"
+type="email"
+placeholder="Email Address">
+
+<input
+id="password"
+type="password"
+placeholder="Password">
+
+<input
+id="confirm"
+type="password"
+placeholder="Confirm Password">
+
+<button
+class="create"
+onclick="registerUser()">
+
+📝 Create Account
+
+</button>
+
+<button
+class="back"
+onclick="goLogin()">
+
+🔐 Back to Login
+
+</button>
+
+<p id="msg"></p>
+
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+
+<script src="firebase-config.js"></script>
+
+
+<script>
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+
+
+function registerUser(){
+
+let name =
+document.getElementById("name").value.trim();
+
+let email =
+document.getElementById("email").value.trim();
+
+let password =
+document.getElementById("password").value;
+
+let confirm =
+document.getElementById("confirm").value;
+
+let msg =
+document.getElementById("msg");
+
+
+if(!name || !email || !password || !confirm){
+
+msg.textContent =
+"❌ सर्व माहिती भरा.";
+
+return;
+
+}
+
+
+if(password.length < 6){
+
+msg.textContent =
+"❌ Password कमीत कमी 6 characters असावा.";
+
+return;
+
+}
+
+
+if(password !== confirm){
+
+msg.textContent =
+"❌ Password जुळत नाही.";
+
+return;
+
+}
+
+
+msg.textContent =
+"⏳ Account तयार करत आहे...";
+
+
+auth.createUserWithEmailAndPassword(
+email,
+password
+)
+
+.then(function(userCredential){
+
+return userCredential.user.updateProfile({
+
+displayName:name
+
+});
+
+})
+
+.then(function(){
+
+msg.textContent =
+"✅ Account successfully created!";
+
+
+setTimeout(function(){
+
+window.location.href="index.html";
+
+},1000);
+
+})
+
+
+.catch(function(error){
+
+console.log(error);
+
+
+if(error.code === "auth/email-already-in-use"){
+
+msg.textContent =
+"❌ हा Email आधीच registered आहे.";
+
+}
+
+else if(error.code === "auth/invalid-email"){
+
+msg.textContent =
+"❌ Email चुकीचा आहे.";
+
+}
+
+else{
+
+msg.textContent =
+"❌ Account तयार करता आले नाही.";
+
+}
+
+});
+
+}
+
+
+function goLogin(){
+
+window.location.href="login.html";
+
+}
+
+</script>
+
+</body>
+</html>
