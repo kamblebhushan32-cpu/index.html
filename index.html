@@ -986,6 +986,72 @@ onclick="editProfile()">
 
 </button>
 
+<div id="editProfileBox" style="
+display:none;
+margin-top:15px;
+padding:18px;
+border-radius:20px;
+background:#ffffff;
+box-shadow:0 8px 25px #00000012;
+">
+
+<h3 style="
+margin-top:0;
+color:#5b35f5;
+">
+✨ Edit Your Profile
+</h3>
+
+<input id="editUsername"
+placeholder="🔖 Username"
+style="width:100%;box-sizing:border-box;margin:6px 0;padding:13px;border:1px solid #ddd;border-radius:12px;">
+
+<input id="editName"
+placeholder="👤 Full Name"
+style="width:100%;box-sizing:border-box;margin:6px 0;padding:13px;border:1px solid #ddd;border-radius:12px;">
+
+<select id="editGender"
+style="width:100%;box-sizing:border-box;margin:6px 0;padding:13px;border:1px solid #ddd;border-radius:12px;">
+<option value="">⚧️ Select Gender</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+<option value="Other">Other</option>
+</select>
+
+<input id="editProfession"
+placeholder="💼 Profession"
+style="width:100%;box-sizing:border-box;margin:6px 0;padding:13px;border:1px solid #ddd;border-radius:12px;">
+
+<input id="editLocation"
+placeholder="📍 From / Location"
+style="width:100%;box-sizing:border-box;margin:6px 0;padding:13px;border:1px solid #ddd;border-radius:12px;">
+
+<textarea id="editBio"
+placeholder="📝 Bio"
+style="width:100%;box-sizing:border-box;margin:6px 0;padding:13px;border:1px solid #ddd;border-radius:12px;min-height:90px;resize:none;"></textarea>
+
+<button class="primary"
+onclick="saveProfileChanges()"
+style="width:100%;margin-top:8px;">
+💾 Save Changes
+</button>
+
+<button
+onclick="closeProfileEditor()"
+style="
+width:100%;
+margin-top:8px;
+padding:12px;
+border:0;
+border-radius:12px;
+background:#eee;
+font-weight:bold;
+">
+Cancel
+</button>
+
+</div>
+ 
 </div>
 
 <div class="card">
@@ -2847,7 +2913,159 @@ function editProfile(){
     });
 
 
- 
+ function editProfile(){
+
+  if(!currentUser){
+    alert("❌ Please login first.");
+    return;
+  }
+
+  let box = document.getElementById("editProfileBox");
+
+  if(!box){
+    alert("❌ Profile editor not found.");
+    return;
+  }
+
+  box.style.display = "block";
+
+  db.collection("users")
+    .doc(currentUser.uid)
+    .get()
+    .then(function(doc){
+
+      let data = doc.exists ? doc.data() : {};
+
+      document.getElementById("editUsername").value =
+        data.username || "";
+
+      document.getElementById("editName").value =
+        data.name || currentUser.displayName || "";
+
+      document.getElementById("editGender").value =
+        data.gender || "";
+
+      document.getElementById("editProfession").value =
+        data.profession || "";
+
+      document.getElementById("editLocation").value =
+        data.location || "";
+
+      document.getElementById("editBio").value =
+        data.bio || "";
+
+      box.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+
+    })
+    .catch(function(error){
+
+      console.log(error);
+      alert("❌ Profile load failed.");
+
+    });
+}
+
+
+function saveProfileChanges(){
+
+  if(!currentUser){
+    alert("❌ Please login first.");
+    return;
+  }
+
+  let username =
+    document.getElementById("editUsername").value.trim().toLowerCase();
+
+  let name =
+    document.getElementById("editName").value.trim();
+
+  let gender =
+    document.getElementById("editGender").value;
+
+  let profession =
+    document.getElementById("editProfession").value.trim();
+
+  let location =
+    document.getElementById("editLocation").value.trim();
+
+  let bio =
+    document.getElementById("editBio").value.trim();
+
+  if(!username){
+    alert("❌ Username टाका.");
+    return;
+  }
+
+  if(!name){
+    alert("❌ Full Name टाका.");
+    return;
+  }
+
+  currentUser.updateProfile({
+    displayName:name
+  })
+  .then(function(){
+
+    return db.collection("users")
+      .doc(currentUser.uid)
+      .set({
+
+        uid:currentUser.uid,
+        name:name,
+        username:username,
+        gender:gender,
+        profession:profession,
+        location:location,
+        bio:bio,
+        email:currentUser.email || "",
+
+        updatedAt:
+          firebase.firestore.FieldValue.serverTimestamp()
+
+      },{
+        merge:true
+      });
+
+  })
+  .then(function(){
+
+    document.getElementById("profileName")
+      .textContent = name;
+
+    document.getElementById("profileAvatar")
+      .textContent = name.charAt(0).toUpperCase();
+
+    document.getElementById("profileEmail")
+      .textContent = "@" + username;
+
+    document.getElementById("editProfileBox")
+      .style.display = "none";
+
+    showToast("✅ Profile saved successfully!");
+
+  })
+  .catch(function(error){
+
+    console.log(error);
+
+    alert("❌ Profile save failed.");
+
+  });
+}
+
+
+function closeProfileEditor(){
+
+  let box = document.getElementById("editProfileBox");
+
+  if(box){
+    box.style.display = "none";
+  }
+
+   
  }
 </script>
  
