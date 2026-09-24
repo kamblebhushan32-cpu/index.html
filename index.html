@@ -2695,6 +2695,38 @@ function showToast(message){
     toast.remove();
   },3500);
 }
+ function editProfile(){
+
+  let name = prompt("👤 तुमचे नाव:", currentUser?.displayName || "");
+
+  if(name === null) return;
+
+  name = name.trim();
+
+  if(!name){
+    alert("कृपया नाव टाका.");
+    return;
+  }
+
+  currentUser.updateProfile({
+    displayName: name
+  }).then(function(){
+
+    document.getElementById("profileName").textContent = name;
+
+    document.getElementById("profileAvatar").textContent =
+      name.charAt(0).toUpperCase();
+
+    alert("✅ Profile updated!");
+
+  }).catch(function(error){
+
+    console.log(error);
+    alert("❌ Profile update failed");
+
+  });
+
+ }
 </script>
  
 </body>
