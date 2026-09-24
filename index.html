@@ -2897,27 +2897,23 @@ function saveProfileChanges(){
       });
 
   })
-  .then(function(){
+.then(function(){
 
-    document.getElementById("profileName")
-      .textContent = name;
+  document.getElementById("profileName")
+    .textContent = name;
 
-    document.getElementById("profileAvatar")
-      .textContent = name.charAt(0).toUpperCase();
+  document.getElementById("profileAvatar")
+    .textContent = name.charAt(0).toUpperCase();
 
-   
-    document.getElementById("editDOB").value =
-       data.dob || "";
-   
-    document.getElementById("profileEmail")
-      .textContent = "@" + username;
+  document.getElementById("profileEmail")
+    .textContent = "@" + username;
 
-    document.getElementById("editProfileBox")
-      .style.display = "none";
+  document.getElementById("editProfileBox")
+    .style.display = "none";
 
-    showToast("✅ Profile saved successfully!");
+  showToast("✅ Profile saved successfully!");
 
-  })
+})
   .catch(function(error){
 
     console.log(error);
