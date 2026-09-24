@@ -2695,9 +2695,8 @@ function showToast(message){
     toast.remove();
   },3500);
 }
- function editProfile(){
-
-  alert("EDIT BUTTON WORKING");
+ 
+function editProfile(){
 
   if(!currentUser){
     alert("❌ Please login first.");
@@ -2708,7 +2707,11 @@ function showToast(message){
   let oldUsername = currentUser.email
     ? currentUser.email.split("@")[0].toLowerCase()
     : "";
+
   let oldBio = "";
+  let oldGender = "";
+  let oldProfession = "";
+  let oldLocation = "";
 
   db.collection("users")
     .doc(currentUser.uid)
@@ -2716,10 +2719,15 @@ function showToast(message){
     .then(function(doc){
 
       if(doc.exists){
+
         let data = doc.data();
 
         oldUsername = data.username || oldUsername;
         oldBio = data.bio || "";
+        oldGender = data.gender || "";
+        oldProfession = data.profession || "";
+        oldLocation = data.location || "";
+
       }
 
       let username = prompt(
@@ -2750,6 +2758,33 @@ function showToast(message){
         return;
       }
 
+      let gender = prompt(
+        "⚧️ Gender\n\nExample: Male / Female / Other",
+        oldGender
+      );
+
+      if(gender === null) return;
+
+      gender = gender.trim();
+
+      let profession = prompt(
+        "💼 Profession\n\nExample: Business / Student / Job",
+        oldProfession
+      );
+
+      if(profession === null) return;
+
+      profession = profession.trim();
+
+      let location = prompt(
+        "📍 From / Location\n\nExample: Pune, Maharashtra",
+        oldLocation
+      );
+
+      if(location === null) return;
+
+      location = location.trim();
+
       let bio = prompt(
         "📝 Bio\n\nतुमच्याबद्दल थोडक्यात लिहा.",
         oldBio
@@ -2760,35 +2795,45 @@ function showToast(message){
       bio = bio.trim();
 
       return currentUser.updateProfile({
-        displayName:name
+
+        displayName: name
+
       }).then(function(){
 
         return db.collection("users")
           .doc(currentUser.uid)
           .set({
-            uid:currentUser.uid,
-            name:name,
-            username:username,
-            bio:bio,
-            email:currentUser.email || "",
+
+            uid: currentUser.uid,
+            name: name,
+            username: username,
+            gender: gender,
+            profession: profession,
+            location: location,
+            bio: bio,
+            email: currentUser.email || "",
+
             updatedAt:
               firebase.firestore.FieldValue.serverTimestamp()
+
           },{
             merge:true
           });
 
       }).then(function(){
 
-        document.getElementById("profileName").textContent =
-          name;
+        document.getElementById("profileName")
+          .textContent = name;
 
-        document.getElementById("profileAvatar").textContent =
+        document.getElementById("profileAvatar")
+          .textContent =
           name.charAt(0).toUpperCase();
 
-        document.getElementById("profileEmail").textContent =
+        document.getElementById("profileEmail")
+          .textContent =
           "@" + username;
 
-        alert("✅ Premium Profile updated!");
+        alert("✅ Profile updated!");
 
       });
 
@@ -2801,6 +2846,7 @@ function showToast(message){
 
     });
 
+}
  
  }
 </script>
