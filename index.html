@@ -536,10 +536,243 @@ transition:.2s;
 left:24px;
 }
 
-@media(max-width:480px){
-.container{
-padding:10px;
+/* ===== MAITRI MOBILE APP INTERFACE ===== */
+
+html,body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
 }
+
+body{
+    margin:0;
+    padding-bottom:75px;
+    background:#f3f4f6;
+}
+
+/* MOBILE HEADER */
+@media(max-width:600px){
+
+header{
+    width:100%;
+    min-height:58px;
+    padding:9px 10px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.maitri-logo{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:25px;
+    font-weight:900;
+    white-space:nowrap;
+    flex:1;
+}
+
+.maitri-logo img{
+    width:38px;
+    height:38px;
+    object-fit:contain;
+}
+
+.header-buttons{
+    display:flex;
+    align-items:center;
+    gap:3px;
+}
+
+.header-buttons button{
+    width:32px;
+    height:32px;
+    margin:0;
+    padding:0;
+    font-size:15px;
+}
+
+/* TOP MENU */
+.topnav{
+    width:100%;
+    padding:7px 6px;
+    gap:5px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+}
+
+.topnav::-webkit-scrollbar{
+    display:none;
+}
+
+.topnav button{
+    flex-shrink:0;
+    padding:8px 12px;
+    font-size:13px;
+}
+
+/* MAIN CONTENT */
+.container{
+    width:100%;
+    max-width:100%;
+    margin:0;
+    padding:8px;
+}
+
+/* CARDS */
+.card{
+    width:100%;
+    margin-bottom:10px;
+    padding:13px;
+    border-radius:14px;
+}
+
+/* STORIES */
+.stories{
+    width:100%;
+    gap:9px;
+    overflow-x:auto;
+    padding-bottom:3px;
+}
+
+.story{
+    min-width:68px;
+}
+
+.story-img{
+    width:58px;
+    height:58px;
+    font-size:21px;
+}
+
+/* CREATE POST */
+.create{
+    width:100%;
+    display:flex;
+    align-items:center;
+}
+
+.create input{
+    min-width:0;
+    width:100%;
+    font-size:14px;
+    padding:11px;
+}
+
+.primary{
+    flex-shrink:0;
+    padding:10px 14px;
+}
+
+/* POSTS */
+.post-head{
+    gap:9px;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+    flex-shrink:0;
+}
+
+.post-image{
+    width:100%;
+    height:190px;
+    border-radius:12px;
+}
+
+.actions{
+    width:100%;
+    gap:5px;
+}
+
+.actions button{
+    flex:1;
+    min-width:70px;
+    padding:8px 6px;
+    font-size:12px;
+}
+
+/* PROFILE */
+.profile-avatar{
+    width:85px;
+    height:85px;
+    font-size:34px;
+}
+
+/* INPUTS */
+input,
+button{
+    max-width:100%;
+}
+
+.search-box{
+    width:100%;
+    font-size:16px;
+}
+
+/* BOTTOM MOBILE NAV */
+.bottomnav{
+    height:65px;
+    width:100%;
+}
+
+.bottomnav button{
+    min-width:55px;
+    font-size:19px;
+}
+
+.bottomnav button span{
+    font-size:9px;
+}
+
+/* SETTINGS */
+.settings-header{
+    width:100%;
+}
+
+.setting-row{
+    padding:14px 4px;
+}
+
+/* MENU */
+#maitriMenu{
+    width:calc(100% - 20px) !important;
+    max-width:300px;
+}
+
+/* SMALL PHONES */
+@media(max-width:360px){
+
+    .maitri-logo{
+        font-size:22px;
+    }
+
+    .maitri-logo img{
+        width:34px;
+        height:34px;
+    }
+
+    .header-buttons button{
+        width:29px;
+        height:29px;
+        font-size:14px;
+    }
+
+    .topnav button{
+        font-size:12px;
+        padding:7px 10px;
+    }
+
+    .card{
+        padding:11px;
+    }
+
+    .actions button{
+        font-size:11px;
+        padding:7px 4px;
+    }
 }
 </style>
 </head>
