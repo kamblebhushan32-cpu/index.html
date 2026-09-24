@@ -2769,157 +2769,6 @@ function editProfile(){
     return;
   }
 
-  let oldName = currentUser.displayName || "";
-  let oldUsername = currentUser.email
-    ? currentUser.email.split("@")[0].toLowerCase()
-    : "";
-
-  let oldBio = "";
-  let oldGender = "";
-  let oldProfession = "";
-  let oldLocation = "";
-
-  db.collection("users")
-    .doc(currentUser.uid)
-    .get()
-    .then(function(doc){
-
-      if(doc.exists){
-
-        let data = doc.data();
-
-        oldUsername = data.username || oldUsername;
-        oldBio = data.bio || "";
-        oldGender = data.gender || "";
-        oldProfession = data.profession || "";
-        oldLocation = data.location || "";
-
-      }
-
-      let username = prompt(
-        "🔖 Username\n\nExample: bhushan123",
-        oldUsername
-      );
-
-      if(username === null) return;
-
-      username = username.trim().toLowerCase();
-
-      if(!username){
-        alert("❌ Username टाका.");
-        return;
-      }
-
-      let name = prompt(
-        "👤 Full Name",
-        oldName
-      );
-
-      if(name === null) return;
-
-      name = name.trim();
-
-      if(!name){
-        alert("❌ Name टाका.");
-        return;
-      }
-
-      let gender = prompt(
-        "⚧️ Gender\n\nExample: Male / Female / Other",
-        oldGender
-      );
-
-      if(gender === null) return;
-
-      gender = gender.trim();
-
-      let profession = prompt(
-        "💼 Profession\n\nExample: Business / Student / Job",
-        oldProfession
-      );
-
-      if(profession === null) return;
-
-      profession = profession.trim();
-
-      let location = prompt(
-        "📍 From / Location\n\nExample: Pune, Maharashtra",
-        oldLocation
-      );
-
-      if(location === null) return;
-
-      location = location.trim();
-
-      let bio = prompt(
-        "📝 Bio\n\nतुमच्याबद्दल थोडक्यात लिहा.",
-        oldBio
-      );
-
-      if(bio === null) return;
-
-      bio = bio.trim();
-
-      return currentUser.updateProfile({
-
-        displayName: name
-
-      }).then(function(){
-
-        return db.collection("users")
-          .doc(currentUser.uid)
-          .set({
-
-            uid: currentUser.uid,
-            name: name,
-            username: username,
-            gender: gender,
-            profession: profession,
-            location: location,
-            bio: bio,
-            email: currentUser.email || "",
-
-            updatedAt:
-              firebase.firestore.FieldValue.serverTimestamp()
-
-          },{
-            merge:true
-          });
-
-      }).then(function(){
-
-        document.getElementById("profileName")
-          .textContent = name;
-
-        document.getElementById("profileAvatar")
-          .textContent =
-          name.charAt(0).toUpperCase();
-
-        document.getElementById("profileEmail")
-          .textContent =
-          "@" + username;
-
-        alert("✅ Profile updated!");
-
-      });
-
-    })
-    .catch(function(error){
-
-      console.log(error);
-
-      alert("❌ Profile save failed.");
-
-    });
-
-
- function editProfile(){
-
-  if(!currentUser){
-    alert("❌ Please login first.");
-    return;
-  }
-
   let box = document.getElementById("editProfileBox");
 
   if(!box){
@@ -2966,6 +2815,7 @@ function editProfile(){
       alert("❌ Profile load failed.");
 
     });
+
 }
 
 
@@ -3054,6 +2904,7 @@ function saveProfileChanges(){
     alert("❌ Profile save failed.");
 
   });
+
 }
 
 
@@ -3065,7 +2916,7 @@ function closeProfileEditor(){
     box.style.display = "none";
   }
 
-   
+ 
  }
 </script>
  
