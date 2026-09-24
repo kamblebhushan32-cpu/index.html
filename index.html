@@ -2697,35 +2697,109 @@ function showToast(message){
 }
  function editProfile(){
 
-  let name = prompt("👤 तुमचे नाव:", currentUser?.displayName || "");
-
-  if(name === null) return;
-
-  name = name.trim();
-
-  if(!name){
-    alert("कृपया नाव टाका.");
+  if(!currentUser){
+    alert("❌ Please login first.");
     return;
   }
 
-  currentUser.updateProfile({
-    displayName: name
-  }).then(function(){
+  let oldName = currentUser.displayName || "";
+  let oldUsername = currentUser.email
+    ? currentUser.email.split("@")[0].toLowerCase()
+    : "";
+  let oldBio = "";
 
-    document.getElementById("profileName").textContent = name;
+  db.collection("users")
+    .doc(currentUser.uid)
+    .get()
+    .then(function(doc){
 
-    document.getElementById("profileAvatar").textContent =
-      name.charAt(0).toUpperCase();
+      if(doc.exists){
+        let data = doc.data();
 
-    alert("✅ Profile updated!");
+        oldUsername = data.username || oldUsername;
+        oldBio = data.bio || "";
+      }
 
-  }).catch(function(error){
+      let username = prompt(
+        "🔖 Username\n\nExample: bhushan123",
+        oldUsername
+      );
 
-    console.log(error);
-    alert("❌ Profile update failed");
+      if(username === null) return;
 
-  });
+      username = username.trim().toLowerCase();
 
+      if(!username){
+        alert("❌ Username टाका.");
+        return;
+      }
+
+      let name = prompt(
+        "👤 Full Name",
+        oldName
+      );
+
+      if(name === null) return;
+
+      name = name.trim();
+
+      if(!name){
+        alert("❌ Name टाका.");
+        return;
+      }
+
+      let bio = prompt(
+        "📝 Bio\n\nतुमच्याबद्दल थोडक्यात लिहा.",
+        oldBio
+      );
+
+      if(bio === null) return;
+
+      bio = bio.trim();
+
+      return currentUser.updateProfile({
+        displayName:name
+      }).then(function(){
+
+        return db.collection("users")
+          .doc(currentUser.uid)
+          .set({
+            uid:currentUser.uid,
+            name:name,
+            username:username,
+            bio:bio,
+            email:currentUser.email || "",
+            updatedAt:
+              firebase.firestore.FieldValue.serverTimestamp()
+          },{
+            merge:true
+          });
+
+      }).then(function(){
+
+        document.getElementById("profileName").textContent =
+          name;
+
+        document.getElementById("profileAvatar").textContent =
+          name.charAt(0).toUpperCase();
+
+        document.getElementById("profileEmail").textContent =
+          "@" + username;
+
+        alert("✅ Premium Profile updated!");
+
+      });
+
+    })
+    .catch(function(error){
+
+      console.log(error);
+
+      alert("❌ Profile save failed.");
+
+    });
+
+ }
  }
 </script>
  
