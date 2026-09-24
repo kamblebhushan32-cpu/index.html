@@ -1002,33 +1002,46 @@ color:#5b35f5;
 ✨ Edit Your Profile
 </h3>
 
+<label>🆔 User ID / Username</label>
 <input id="editUsername"
-placeholder="🔖 Username"
-style="width:100%;box-sizing:border-box;margin:6px 0;padding:13px;border:1px solid #ddd;border-radius:12px;">
+placeholder="User ID"
+style="width:100%;box-sizing:border-box;margin:6px 0 12px;padding:13px;border:1px solid #ddd;border-radius:12px;">
 
+<label>👤 Full Name</label>
 <input id="editName"
-placeholder="👤 Full Name"
-style="width:100%;box-sizing:border-box;margin:6px 0;padding:13px;border:1px solid #ddd;border-radius:12px;">
+placeholder="Full Name"
+style="width:100%;box-sizing:border-box;margin:6px 0 12px;padding:13px;border:1px solid #ddd;border-radius:12px;">
 
+<label>⚧️ Gender</label>
 <select id="editGender"
-style="width:100%;box-sizing:border-box;margin:6px 0;padding:13px;border:1px solid #ddd;border-radius:12px;">
-<option value="">⚧️ Select Gender</option>
+style="width:100%;box-sizing:border-box;margin:6px 0 12px;padding:13px;border:1px solid #ddd;border-radius:12px;">
+
+<option value="">Select Gender</option>
 <option value="Male">Male</option>
 <option value="Female">Female</option>
 <option value="Other">Other</option>
+
 </select>
 
-<input id="editProfession"
-placeholder="💼 Profession"
-style="width:100%;box-sizing:border-box;margin:6px 0;padding:13px;border:1px solid #ddd;border-radius:12px;">
+<label>🎂 Date of Birth</label>
+<input id="editDOB"
+type="date"
+style="width:100%;box-sizing:border-box;margin:6px 0 12px;padding:13px;border:1px solid #ddd;border-radius:12px;">
 
+<label>📍 Location</label>
 <input id="editLocation"
-placeholder="📍 From / Location"
-style="width:100%;box-sizing:border-box;margin:6px 0;padding:13px;border:1px solid #ddd;border-radius:12px;">
+placeholder="Location"
+style="width:100%;box-sizing:border-box;margin:6px 0 12px;padding:13px;border:1px solid #ddd;border-radius:12px;">
 
+<label>💼 Profession</label>
+<input id="editProfession"
+placeholder="Profession"
+style="width:100%;box-sizing:border-box;margin:6px 0 12px;padding:13px;border:1px solid #ddd;border-radius:12px;">
+
+<label>📝 Bio</label>
 <textarea id="editBio"
-placeholder="📝 Bio"
-style="width:100%;box-sizing:border-box;margin:6px 0;padding:13px;border:1px solid #ddd;border-radius:12px;min-height:90px;resize:none;"></textarea>
+placeholder="Tell something about yourself..."
+style="width:100%;box-sizing:border-box;margin:6px 0 12px;padding:13px;border:1px solid #ddd;border-radius:12px;min-height:90px;resize:none;"></textarea>
 
 <button class="primary"
 onclick="saveProfileChanges()"
@@ -2832,6 +2845,9 @@ function saveProfileChanges(){
   let name =
     document.getElementById("editName").value.trim();
 
+  let dob =
+  document.getElementById("editDOB").value;
+ 
   let gender =
     document.getElementById("editGender").value;
 
@@ -2867,6 +2883,7 @@ function saveProfileChanges(){
         name:name,
         username:username,
         gender:gender,
+        dob:dob,
         profession:profession,
         location:location,
         bio:bio,
@@ -2888,6 +2905,10 @@ function saveProfileChanges(){
     document.getElementById("profileAvatar")
       .textContent = name.charAt(0).toUpperCase();
 
+   
+    document.getElementById("editDOB").value =
+       data.dob || "";
+   
     document.getElementById("profileEmail")
       .textContent = "@" + username;
 
