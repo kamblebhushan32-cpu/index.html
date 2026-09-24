@@ -533,19 +533,92 @@ padding:10px;
 
 <body>
 
-<header>
-<div class="logo">MAITRI</div>
+<header class="maitri-header">
 
-<div class="header-buttons">
-<button onclick="showPage('search')">🔍</button>
-<button onclick="showPage('notifications')">🔔</button>
-<button onclick="showPage('profile')">👤</button>
-</div>
+  <div class="maitri-logo">
+    MAITRI
+  </div>
+
+  <div class="header-buttons">
+
+    <button onclick="
+      document.getElementById('postText').focus();
+      document.getElementById('postText').scrollIntoView({
+        behavior:'smooth',
+        block:'center'
+      });
+    ">
+      ＋
+    </button>
+
+    <button onclick="showPage('search')">
+      🔍
+    </button>
+
+    <button onclick="showPage('messages')">
+      💬
+    </button>
+
+    <button onclick="showPage('notifications')">
+      🔔
+    </button>
+
+    <button onclick="showPage('profile')">
+      👤
+    </button>
+
+    <button onclick="toggleMaitriMenu()">
+      ☰
+    </button>
+
+  </div>
+
 </header>
+
+<div id="maitriMenu" style="
+display:none;
+position:fixed;
+top:65px;
+right:10px;
+width:230px;
+background:white;
+border-radius:18px;
+padding:10px;
+box-shadow:0 8px 30px #0003;
+z-index:999;
+">
+
+<div class="menu"
+onclick="openSettings('privacy');toggleMaitriMenu();">
+🔒 Privacy
+</div>
+
+<div class="menu"
+onclick="openSettings('notifications');toggleMaitriMenu();">
+🔔 Notification Settings
+</div>
+
+<div class="menu"
+onclick="openSettings('appearance');toggleMaitriMenu();">
+🌙 Appearance
+</div>
+
+<div class="menu"
+onclick="openSettings('about');toggleMaitriMenu();">
+ℹ️ About MAITRI
+</div>
+
+<div class="menu"
+onclick="logout();">
+🚪 Logout
+</div>
+
+</div>
 
 <div class="topnav">
 
-<button class="active" onclick="showPage('home',this)">
+<button class="active"
+onclick="showPage('home',this)">
 🏠 Home
 </button>
 
@@ -557,12 +630,8 @@ padding:10px;
 🎥 Videos
 </button>
 
-<button onclick="showPage('messages',this)">
-💬 Messages
-</button>
-
-<button onclick="showPage('groups',this)">
-👥 Groups
+<button onclick="showPage('people',this)">
+👥 People
 </button>
 
 </div>
@@ -1478,6 +1547,16 @@ loadPosts();
 
 
 /* PAGE SYSTEM */
+
+ function toggleMaitriMenu(){
+  const menu = document.getElementById("maitriMenu");
+
+  if(menu.style.display === "none" || menu.style.display === ""){
+    menu.style.display = "block";
+  }else{
+    menu.style.display = "none";
+  }
+ }
 
 function showPage(page,button){
 
