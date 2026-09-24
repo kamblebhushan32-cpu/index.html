@@ -1068,6 +1068,155 @@ button{
     font-size:11px;
   }
 }
+ /* ===== MAITRI REELS MOBILE ===== */
+
+.reels-page{
+  background:#000;
+  margin:-6px;
+  min-height:calc(100vh - 140px);
+}
+
+.reel{
+  position:relative;
+  width:100%;
+  height:calc(100vh - 140px);
+  min-height:520px;
+  background:#111;
+  overflow:hidden;
+  color:white;
+}
+
+.reel-video{
+  width:100%;
+  height:100%;
+  background:linear-gradient(135deg,#222,#6b35d8,#111);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:70px;
+}
+
+.reel-top{
+  position:absolute;
+  top:18px;
+  left:15px;
+  right:15px;
+  display:flex;
+  align-items:center;
+  gap:28px;
+  z-index:5;
+}
+
+.reel-top .plus{
+  font-size:36px;
+}
+
+.reel-title{
+  font-size:26px;
+  font-weight:900;
+}
+
+.reel-friends{
+  font-size:22px;
+  color:#ddd;
+}
+
+.reel-actions{
+  position:absolute;
+  right:14px;
+  bottom:110px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  align-items:center;
+  z-index:5;
+}
+
+.reel-actions button{
+  border:0;
+  background:transparent;
+  color:white;
+  font-size:34px;
+  padding:0;
+}
+
+.reel-actions small{
+  font-size:12px;
+  margin-top:-14px;
+}
+
+.reel-user{
+  position:absolute;
+  left:18px;
+  bottom:45px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  z-index:5;
+}
+
+.reel-avatar{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#5b35f5,#e83e8c);
+  display:grid;
+  place-items:center;
+  font-weight:bold;
+  font-size:20px;
+}
+
+.reel-username{
+  font-weight:bold;
+  font-size:16px;
+}
+
+.reel-follow{
+  border:1px solid white;
+  background:transparent;
+  color:white;
+  border-radius:8px;
+  padding:6px 12px;
+  font-size:14px;
+}
+
+.reel-caption{
+  position:absolute;
+  left:18px;
+  bottom:12px;
+  font-size:14px;
+  color:#eee;
+}
+
+@media(max-width:600px){
+
+  .reels-page{
+    margin:-6px;
+    min-height:calc(100vh - 70px);
+  }
+
+  .reel{
+    height:calc(100vh - 70px);
+    min-height:560px;
+  }
+
+  .reel-top{
+    top:14px;
+  }
+
+  .reel-title{
+    font-size:25px;
+  }
+
+  .reel-actions{
+    right:12px;
+    bottom:125px;
+  }
+
+  .reel-actions button{
+    font-size:34px;
+  }
+   }
 </style>
 </head>
 
@@ -1355,22 +1504,76 @@ onkeydown="sendComment(event,this)">
 
 <div id="reels" class="page">
 
-<div class="card">
+  <div class="reels-page">
 
-<h2>🎬 MAITRI Reels</h2>
+    <div class="reel">
 
-<div class="post-image">
-▶️
-</div>
+      <!-- Reel Video -->
+      <div class="reel-video">
+        ▶️
+      </div>
 
-<p>Short videos and Reels.</p>
+      <!-- Top -->
+      <div class="reel-top">
 
-<button class="primary"
-onclick="alert('Reel upload feature लवकरच जोडू')">
-＋ Create Reel
-</button>
+        <div class="plus">＋</div>
 
-</div>
+        <div class="reel-title">
+          Reels
+        </div>
+
+        <div class="reel-friends">
+          Friends 👤👥
+        </div>
+
+      </div>
+
+      <!-- Right Actions -->
+      <div class="reel-actions">
+
+        <button>♡</button>
+        <small>0</small>
+
+        <button>💬</button>
+        <small>0</small>
+
+        <button>➤</button>
+
+        <button>🔖</button>
+
+        <button>☰</button>
+
+      </div>
+
+      <!-- User -->
+      <div class="reel-user">
+
+        <div class="reel-avatar">
+          M
+        </div>
+
+        <div class="reel-username">
+          MAITRI User
+        </div>
+
+        <button class="reel-follow">
+          Follow
+        </button>
+
+      </div>
+
+      <!-- Caption -->
+      <div class="reel-caption">
+
+        MAITRI Reel ❤️
+        <br>
+        See more
+
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
 
