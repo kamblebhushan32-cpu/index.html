@@ -2939,7 +2939,10 @@ function saveProfileChanges(){
 
   document.getElementById("profileName")
     .textContent = name;
-
+ 
+ document.getElementById("editDOB").value =
+     data.dob || "";
+ 
   document.getElementById("profileAvatar")
     .textContent = name.charAt(0).toUpperCase();
 
