@@ -29,7 +29,20 @@ top:0;
 z-index:30;
 }
 
-.logo{font-size:32px;font-weight:900}
+.maitri-logo{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  font-size:34px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.maitri-logo img{
+  width:42px;
+  height:42px;
+  object-fit:contain;
+}
 
 .header-buttons button{
 border:0;
@@ -536,7 +549,8 @@ padding:10px;
 <header class="maitri-header">
 
   <div class="maitri-logo">
-    MAITRI
+  <img src="maitri-logo.png" alt="MAITRI Logo">
+  <span>MAITRI</span>
   </div>
 
   <div class="header-buttons">
