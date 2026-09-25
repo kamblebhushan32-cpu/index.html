@@ -1784,13 +1784,11 @@ onkeydown="sendComment(event,this)">
       <!-- Right Actions -->
       <div class="reel-actions">
 
-        <button>♡</button>
-        <small>0</small>
-
         <button>💬</button>
         <small>0</small>
 
         <button id="reelLikeBtn" onclick="toggleReelLike()">♡</button>
+       <small id="reelLikeCount">0</small>
 
         <button>🔖</button>
 
@@ -3975,17 +3973,20 @@ function closeProfileEditor(){
 function toggleReelLike(){
 
   let button = document.getElementById("reelLikeBtn");
+  let count = document.getElementById("reelLikeCount");
 
-  if(!button){
+  if(!button || !count){
     return;
   }
 
-  button.classList.toggle("liked");
+  let liked = button.classList.toggle("liked");
 
-  if(button.classList.contains("liked")){
+  if(liked){
     button.innerHTML = "♥";
+    count.innerHTML = "1";
   }else{
     button.innerHTML = "♡";
+    count.innerHTML = "0";
   }
 
  }
