@@ -1458,6 +1458,287 @@ button{
   transform:scale(1.15);
   text-shadow:0 0 12px rgba(255,45,117,.6);
 }
+ /* ===== MAITRI PREMIUM VERTICAL REELS ===== */
+
+.reels-feed{
+  width:100%;
+  height:calc(100vh - 120px);
+  min-height:500px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scroll-snap-type:y mandatory;
+  background:#000;
+  scrollbar-width:none;
+}
+
+.reels-feed::-webkit-scrollbar{
+  display:none;
+}
+
+.reel-card{
+  position:relative;
+  width:100%;
+  height:calc(100vh - 120px);
+  min-height:500px;
+  background:#000;
+  color:#fff;
+  overflow:hidden;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+}
+
+/* VIDEO */
+
+.reel-video-box{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  background:
+    linear-gradient(
+      135deg,
+      #171717,
+      #5b35f5,
+      #e83e8c,
+      #111
+    );
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.reel-feed-video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  background:#111;
+}
+
+.reel-placeholder{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  font-size:65px;
+  opacity:.9;
+  pointer-events:none;
+}
+
+/* TOP */
+
+.reel-feed-top{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:70px;
+  padding:12px 14px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  z-index:10;
+  background:linear-gradient(
+    to bottom,
+    rgba(0,0,0,.65),
+    transparent
+  );
+}
+
+.reel-add{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.18);
+  color:#fff;
+  font-size:30px;
+  line-height:42px;
+  text-align:center;
+  cursor:pointer;
+  backdrop-filter:blur(8px);
+}
+
+.reel-feed-title{
+  font-size:22px;
+  font-weight:900;
+  flex:1;
+  text-align:center;
+}
+
+.reel-feed-friends{
+  font-size:14px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+/* RIGHT ACTIONS */
+
+.reel-feed-actions{
+  position:absolute;
+  right:12px;
+  bottom:145px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
+  z-index:20;
+}
+
+.reel-feed-actions button{
+  width:48px;
+  height:48px;
+  border:0;
+  border-radius:50%;
+  background:rgba(0,0,0,.35);
+  color:#fff;
+  font-size:27px;
+  cursor:pointer;
+  backdrop-filter:blur(6px);
+}
+
+.reel-feed-actions button:active{
+  transform:scale(.9);
+}
+
+.reel-feed-actions small{
+  color:#fff;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+/* USER */
+
+.reel-feed-user{
+  position:absolute;
+  left:15px;
+  right:75px;
+  bottom:90px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  z-index:20;
+}
+
+.reel-feed-avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:linear-gradient(
+    135deg,
+    #5b35f5,
+    #e83e8c
+  );
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:18px;
+  font-weight:900;
+  border:2px solid #fff;
+}
+
+.reel-feed-username{
+  font-size:15px;
+  font-weight:900;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.reel-follow-btn{
+  border:1px solid rgba(255,255,255,.8);
+  background:rgba(0,0,0,.3);
+  color:#fff;
+  border-radius:8px;
+  padding:6px 12px;
+  font-size:13px;
+  font-weight:800;
+}
+
+/* CAPTION */
+
+.reel-feed-caption{
+  position:absolute;
+  left:15px;
+  right:70px;
+  bottom:28px;
+  z-index:20;
+  font-size:14px;
+  line-height:1.4;
+  text-shadow:0 2px 5px #000;
+}
+
+.reel-feed-caption b{
+  display:block;
+  margin-bottom:3px;
+  font-size:14px;
+}
+
+.reel-feed-caption span{
+  display:block;
+}
+
+.reel-feed-caption div{
+  margin-top:4px;
+  font-size:12px;
+  font-weight:700;
+  opacity:.85;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  .reels-feed{
+    height:calc(100vh - 120px);
+  }
+
+  .reel-card{
+    height:calc(100vh - 120px);
+  }
+
+  .reel-feed-title{
+    font-size:21px;
+  }
+
+  .reel-feed-actions{
+    right:8px;
+    bottom:145px;
+  }
+
+  .reel-feed-actions button{
+    width:46px;
+    height:46px;
+    font-size:25px;
+  }
+
+  .reel-feed-user{
+    bottom:92px;
+  }
+
+  .reel-feed-caption{
+    bottom:28px;
+  }
+
+}
+
+/* DESKTOP */
+
+@media(min-width:601px){
+
+  .reels-feed{
+    max-width:500px;
+    margin:0 auto;
+  }
+
+  .reel-card{
+    max-width:500px;
+    margin:0 auto;
+  }
+
+}
 </style>
 </head>
 
@@ -1741,84 +2022,298 @@ onkeydown="sendComment(event,this)">
 
 </div>
 
-<!-- REELS -->
+<!-- ===== MAITRI REELS FEED ===== -->
 
 <div id="reels" class="page">
 
-  <div class="reels-page">
+  <div class="reels-feed">
 
-    <div class="reel">
+    <!-- ===== REEL 1 ===== -->
+    <div class="reel-card">
 
-      <!-- Reel Video -->
-      <div class="reel-video">
-       
-  <video
-    id="reelVideo"
-    controls
-    playsinline
-    loop
-    onclick="toggleReelPlay()"
-    style="width:100%;height:100%;object-fit:cover;display:none;">
-  </video>
+      <div class="reel-video-box">
 
-  <span id="reelPlaceholder">▶️</span>
+        <video
+          id="reelVideo"
+          class="reel-feed-video"
+          playsinline
+          loop
+          muted
+          onclick="toggleFeedReel(this)">
+        </video>
+
+        <div class="reel-placeholder">
+          ▶️
+        </div>
 
       </div>
 
-      <!-- Top -->
-      <div class="reel-top">
+      <!-- TOP -->
+      <div class="reel-feed-top">
 
-        <div class="plus" onclick="document.getElementById('reelFileInput').click()">＋</div>
+        <button
+          class="reel-add"
+          onclick="document.getElementById('reelFileInput').click()">
+          ＋
+        </button>
 
-        <input type="file" id="reelFileInput" accept="video/*" style="display:none" onchange="previewReel(this)">
-       <div class="reel-title">
+        <input
+          type="file"
+          id="reelFileInput"
+          accept="video/*"
+          style="display:none"
+          onchange="previewReel(this)">
+
+        <div class="reel-feed-title">
           Reels
         </div>
 
-        <div class="reel-friends">
-          Friends 👤👥
+        <div class="reel-feed-friends">
+          Friends 👥
         </div>
 
       </div>
 
-      <!-- Right Actions -->
-      <div class="reel-actions">
+      <!-- RIGHT ACTIONS -->
+      <div class="reel-feed-actions">
 
-        <button onclick="openReelComments()">💬</button>
+        <button onclick="openReelComments()">
+          💬
+        </button>
+
         <small id="reelCommentCount">0</small>
 
-        <button id="reelLikeBtn" onclick="toggleReelLike()">♡</button>
-       <small id="reelLikeCount">0</small>
+        <button
+          id="reelLikeBtn"
+          onclick="toggleReelLike()">
+          ♡
+        </button>
 
-        <button>🔖</button>
+        <small id="reelLikeCount">0</small>
 
-        <button>☰</button>
+        <button onclick="saveFeedReel(this)">
+          🔖
+        </button>
+
+        <button onclick="showToast('More options')">
+          ⋮
+        </button>
 
       </div>
 
-      <!-- User -->
-      <div class="reel-user">
+      <!-- USER -->
+      <div class="reel-feed-user">
 
-        <div class="reel-avatar">
+        <div class="reel-feed-avatar">
           M
         </div>
 
-        <div class="reel-username">
+        <div class="reel-feed-username">
           MAITRI User
         </div>
 
-        <button class="reel-follow">
+        <button class="reel-follow-btn">
           Follow
         </button>
 
       </div>
 
-      <!-- Caption -->
-      <div class="reel-caption">
+      <!-- CAPTION -->
+      <div class="reel-feed-caption">
 
-        MAITRI Reel ❤️
-        <br>
-        See more
+        <b>MAITRI User</b>
+
+        <span>
+          MAITRI Reel ❤️
+        </span>
+
+        <div>
+          See more
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ===== REEL 2 ===== -->
+    <div class="reel-card">
+
+      <div class="reel-video-box">
+
+        <video
+          class="reel-feed-video"
+          playsinline
+          loop
+          muted
+          onclick="toggleFeedReel(this)">
+        </video>
+
+        <div class="reel-placeholder">
+          ▶️
+        </div>
+
+      </div>
+
+      <div class="reel-feed-top">
+
+        <div class="reel-add">
+          ＋
+        </div>
+
+        <div class="reel-feed-title">
+          Reels
+        </div>
+
+        <div class="reel-feed-friends">
+          Friends 👥
+        </div>
+
+      </div>
+
+      <div class="reel-feed-actions">
+
+        <button onclick="showToast('💬 Comments')">
+          💬
+        </button>
+
+        <small>0</small>
+
+        <button onclick="toggleDemoLike(this)">
+          ♡
+        </button>
+
+        <small>0</small>
+
+        <button onclick="saveFeedReel(this)">
+          🔖
+        </button>
+
+        <button onclick="showToast('More options')">
+          ⋮
+        </button>
+
+      </div>
+
+      <div class="reel-feed-user">
+
+        <div class="reel-feed-avatar">
+          A
+        </div>
+
+        <div class="reel-feed-username">
+          MAITRI Friend
+        </div>
+
+        <button class="reel-follow-btn">
+          Follow
+        </button>
+
+      </div>
+
+      <div class="reel-feed-caption">
+
+        <b>MAITRI Friend</b>
+
+        <span>
+          Welcome to MAITRI ❤️
+        </span>
+
+        <div>
+          See more
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ===== REEL 3 ===== -->
+    <div class="reel-card">
+
+      <div class="reel-video-box">
+
+        <video
+          class="reel-feed-video"
+          playsinline
+          loop
+          muted
+          onclick="toggleFeedReel(this)">
+        </video>
+
+        <div class="reel-placeholder">
+          ▶️
+        </div>
+
+      </div>
+
+      <div class="reel-feed-top">
+
+        <div class="reel-add">
+          ＋
+        </div>
+
+        <div class="reel-feed-title">
+          Reels
+        </div>
+
+        <div class="reel-feed-friends">
+          Friends 👥
+        </div>
+
+      </div>
+
+      <div class="reel-feed-actions">
+
+        <button onclick="showToast('💬 Comments')">
+          💬
+        </button>
+
+        <small>0</small>
+
+        <button onclick="toggleDemoLike(this)">
+          ♡
+        </button>
+
+        <small>0</small>
+
+        <button onclick="saveFeedReel(this)">
+          🔖
+        </button>
+
+        <button onclick="showToast('More options')">
+          ⋮
+        </button>
+
+      </div>
+
+      <div class="reel-feed-user">
+
+        <div class="reel-feed-avatar">
+          P
+        </div>
+
+        <div class="reel-feed-username">
+          MAITRI Creator
+        </div>
+
+        <button class="reel-follow-btn">
+          Follow
+        </button>
+
+      </div>
+
+      <div class="reel-feed-caption">
+
+        <b>MAITRI Creator</b>
+
+        <span>
+          Create • Connect • Share ✨
+        </span>
+
+        <div>
+          See more
+        </div>
 
       </div>
 
