@@ -4150,7 +4150,11 @@ function toggleReelLike(){
     document.getElementById("reelCommentsList");
 
   db.collection("reelComments")
-    .where("reelId","==","demo-reel")
+    .where(
+  "reelId",
+  "==",
+  document.getElementById("reelVideo").dataset.reelId || "demo-reel"
+)
     .get()
     .then(function(snapshot){
 
@@ -4320,7 +4324,9 @@ function toggleReelLike(){
 
     text: text,
 
-    reelId: "demo-reel",
+   reelId:
+  document.getElementById("reelVideo").dataset.reelId || "demo-reel",
+    
 
     createdAt:
       firebase.firestore.FieldValue.serverTimestamp()
@@ -4372,6 +4378,7 @@ function toggleReelLike(){
   let videoURL = URL.createObjectURL(file);
 
   video.src = videoURL;
+  video.dataset.reelId = "local-" + file.name;
   video.style.display = "block";
 
   let placeholder = document.getElementById("reelPlaceholder");
