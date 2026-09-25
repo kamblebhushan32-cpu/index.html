@@ -4125,9 +4125,49 @@ function toggleReelLike(){
     return;
   }
 
-  alert("💬 Comment sent: " + text);
+  let name =
+    currentUser && currentUser.displayName
+      ? currentUser.displayName
+      : "MAITRI User";
 
-  input.value = "";
+  db.collection("reelComments").add({
+
+    uid:
+      currentUser
+        ? currentUser.uid
+        : "guest",
+
+    name: name,
+
+    text: text,
+
+    reelId: "demo-reel",
+
+    createdAt:
+      firebase.firestore.FieldValue.serverTimestamp()
+
+  })
+  .then(function(){
+
+    input.value = "";
+
+    let panel =
+      document.getElementById("reelCommentsPanel");
+
+    if(panel){
+      panel.remove();
+    }
+
+    showToast("💬 Comment posted ❤️");
+
+  })
+  .catch(function(error){
+
+    console.error(error);
+
+    alert("❌ Comment save failed.");
+
+  });
 
  }
  function previewReel(input){
