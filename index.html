@@ -1737,7 +1737,17 @@ onkeydown="sendComment(event,this)">
 
       <!-- Reel Video -->
       <div class="reel-video">
-        ▶️
+
+  <video
+    id="reelVideo"
+    controls
+    playsinline
+    loop
+    style="width:100%;height:100%;object-fit:cover;display:none;">
+  </video>
+
+  <span id="reelPlaceholder">▶️</span>
+
       </div>
 
       <!-- Top -->
@@ -1745,7 +1755,7 @@ onkeydown="sendComment(event,this)">
 
         <div class="plus" onclick="document.getElementById('reelFileInput').click()">＋</div>
 
-        <input type="file" id="reelFileInput" accept="video/*" style="display:none" onchange="uploadReel(this)">
+        <input type="file" id="reelFileInput" accept="video/*" style="display:none" onchange="previewReel(this)">
        <div class="reel-title">
           Reels
         </div>
@@ -3949,6 +3959,44 @@ function closeProfileEditor(){
   }
 
  
+ }
+ function previewReel(input){
+
+  let file = input.files[0];
+
+  if(!file){
+    return;
+  }
+
+  if(!file.type.startsWith("video/")){
+    alert("❌ Please select a video.");
+    return;
+  }
+
+  let video = document.getElementById("reelVideo");
+
+  if(!video){
+    alert("❌ Reel video player not found.");
+    return;
+  }
+
+  let videoURL = URL.createObjectURL(file);
+
+  video.src = videoURL;
+  video.style.display = "block";
+
+  let placeholder = document.getElementById("reelPlaceholder");
+
+  if(placeholder){
+    placeholder.style.display = "none";
+  }
+
+  video.play().catch(function(error){
+    console.log("Autoplay blocked:", error);
+  });
+
+  showToast("✅ Reel video ready!");
+
  }
  function uploadReel(input){
 
