@@ -1743,9 +1743,10 @@ onkeydown="sendComment(event,this)">
       <!-- Top -->
       <div class="reel-top">
 
-        <div class="plus">＋</div>
+        <div class="plus" onclick="document.getElementById('reelFileInput').click()">＋</div>
 
-        <div class="reel-title">
+        <input type="file" id="reelFileInput" accept="video/*" style="display:none" onchange="uploadReel(this)">
+       <div class="reel-title">
           Reels
         </div>
 
