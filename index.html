@@ -1737,12 +1737,13 @@ onkeydown="sendComment(event,this)">
 
       <!-- Reel Video -->
       <div class="reel-video">
-
+       
   <video
     id="reelVideo"
     controls
     playsinline
     loop
+    onclick="toggleReelPlay()"
     style="width:100%;height:100%;object-fit:cover;display:none;">
   </video>
 
@@ -3958,8 +3959,23 @@ function closeProfileEditor(){
     box.style.display = "none";
   }
 
- 
+ function toggleReelPlay(){
+
+  let video = document.getElementById("reelVideo");
+
+  if(!video){
+    return;
+  }
+
+  if(video.paused){
+    video.play();
+  }else{
+    video.pause();
+  }
+
  }
+ }
+ 
  function previewReel(input){
 
   let file = input.files[0];
