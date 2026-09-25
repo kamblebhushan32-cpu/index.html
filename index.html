@@ -4111,6 +4111,25 @@ function toggleReelLike(){
 
   document.body.appendChild(panel);
  }
+ function sendReelComment(){
+
+  let input = document.getElementById("reelCommentInput");
+
+  if(!input){
+    return;
+  }
+
+  let text = input.value.trim();
+
+  if(!text){
+    return;
+  }
+
+  alert("💬 Comment sent: " + text);
+
+  input.value = "";
+
+ }
  function previewReel(input){
 
   let file = input.files[0];
