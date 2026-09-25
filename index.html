@@ -3973,24 +3973,46 @@ function closeProfileEditor(){
 }
 function toggleReelLike(){
 
-  let button = document.getElementById("reelLikeBtn");
-  let count = document.getElementById("reelLikeCount");
+  let button =
+    document.getElementById("reelLikeBtn");
 
-  if(!button || !count){
+  let count =
+    document.getElementById("reelLikeCount");
+
+  let video =
+    document.getElementById("reelVideo");
+
+  if(!button || !count || !video){
     return;
   }
 
-  let liked = button.classList.toggle("liked");
+  let reelId =
+    video.dataset.reelId || "demo-reel";
+
+  let storageKey =
+    "maitri_reel_like_" + reelId;
+
+  let liked =
+    localStorage.getItem(storageKey) === "true";
+
+  liked = !liked;
+
+  localStorage.setItem(
+    storageKey,
+    String(liked)
+  );
 
   if(liked){
     button.innerHTML = "♥";
+    button.classList.add("liked");
     count.innerHTML = "1";
   }else{
     button.innerHTML = "♡";
+    button.classList.remove("liked");
     count.innerHTML = "0";
   }
 
- }
+}
  function toggleReelPlay(){
 
   let video = document.getElementById("reelVideo");
