@@ -1444,6 +1444,20 @@ button{
 .reel{
   width:100% !important;
 }
+ #reelLikeBtn{
+  background:transparent;
+  border:0;
+  color:white;
+  font-size:42px;
+  cursor:pointer;
+  transition:transform .2s ease;
+}
+
+#reelLikeBtn.liked{
+  color:#ff2d75;
+  transform:scale(1.15);
+  text-shadow:0 0 12px rgba(255,45,117,.6);
+}
 </style>
 </head>
 
@@ -1776,7 +1790,7 @@ onkeydown="sendComment(event,this)">
         <button>💬</button>
         <small>0</small>
 
-        <button>➤</button>
+        <button id="reelLikeBtn" onclick="toggleReelLike()">♡</button>
 
         <button>🔖</button>
 
@@ -3958,7 +3972,23 @@ function closeProfileEditor(){
   if(box){
     box.style.display = "none";
   }
+function toggleReelLike(){
 
+  let button = document.getElementById("reelLikeBtn");
+
+  if(!button){
+    return;
+  }
+
+  button.classList.toggle("liked");
+
+  if(button.classList.contains("liked")){
+    button.innerHTML = "♥";
+  }else{
+    button.innerHTML = "♡";
+  }
+
+ }
  function toggleReelPlay(){
 
   let video = document.getElementById("reelVideo");
