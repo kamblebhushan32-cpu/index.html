@@ -2514,42 +2514,84 @@ loadPosts();
   }
  }
 
-function showPage(page,button){
+function showPage(page,button,pushHistory = true){
 
-document.querySelectorAll(".page").forEach(function(p){
+  document.querySelectorAll(".page").forEach(function(p){
+    p.classList.remove("active");
+  });
 
-p.classList.remove("active");
+  let selected =
+    document.getElementById(page);
+
+  if(selected){
+    selected.classList.add("active");
+  }
+
+  let settings =
+    document.getElementById("settings");
+
+  if(settings){
+    settings.classList.remove("active");
+  }
+
+  document.querySelectorAll(".topnav button").forEach(function(b){
+    b.classList.remove("active");
+  });
+
+  if(button){
+    button.classList.add("active");
+  }
+
+  /* Stop Reel when leaving Reels */
+  if(page !== "reels"){
+    let reelVideo =
+      document.getElementById("reelVideo");
+
+    if(reelVideo){
+      reelVideo.pause();
+    }
+  }
+
+  /* Browser / Android Back history */
+  if(pushHistory){
+    let newHash = "#" + page;
+
+    if(location.hash !== newHash){
+      history.pushState(
+        {page:page},
+        "",
+        newHash
+      );
+    }
+  }
+
+  window.scrollTo(0,0);
+}
+
+/* ===== ANDROID / BROWSER BACK ===== */
+
+let initialPage =
+  location.hash
+    ? location.hash.substring(1)
+    : "home";
+
+history.replaceState(
+  {page: initialPage},
+  "",
+  "#" + initialPage
+);
+
+window.addEventListener("popstate", function(event){
+
+  let page =
+    event.state && event.state.page
+      ? event.state.page
+      : "home";
+
+  showPage(page, null, false);
 
 });
-
-let selected=document.getElementById(page);
-
-if(selected){
-
-selected.classList.add("active");
-
-}
-
-document.getElementById("settings").classList.remove("active");
-
-
-document.querySelectorAll(".topnav button").forEach(function(b){
-
-b.classList.remove("active");
-
-});
-
-if(button){
-
-button.classList.add("active");
-
-}
-
-window.scrollTo(0,0);
-
-}
-
-
+ 
 /* BOTTOM NAV */
 
 function bottomPage(page,button){
