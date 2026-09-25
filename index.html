@@ -4342,6 +4342,13 @@ function toggleReelLike(){
     if(panel){
       panel.remove();
     }
+   let count =
+  document.getElementById("reelCommentCount");
+
+if(count){
+  count.innerHTML =
+    String((parseInt(count.innerHTML) || 0) + 1);
+}
 
     showToast("💬 Comment posted ❤️");
 
