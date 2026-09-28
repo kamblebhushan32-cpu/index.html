@@ -1516,6 +1516,56 @@ button{
   cursor:pointer;
 }
 
+/* ===== PREMIUM REEL SOUND CONTROL ===== */
+.reel-sound-control{
+  position:absolute;
+  right:14px;
+  top:82px;
+  width:52px;
+  height:52px;
+  border:1px solid rgba(255,255,255,.5);
+  border-radius:50%;
+  background:rgba(15,15,25,.42);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  z-index:25;
+  backdrop-filter:blur(14px) saturate(150%);
+  -webkit-backdrop-filter:blur(14px) saturate(150%);
+  box-shadow:0 8px 28px rgba(0,0,0,.35), inset 0 1px 1px rgba(255,255,255,.25);
+  cursor:pointer;
+  transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+.reel-sound-control:active{transform:scale(.88)}
+.reel-sound-control:hover{
+  background:rgba(15,15,25,.58);
+  box-shadow:0 10px 32px rgba(0,0,0,.42), inset 0 1px 1px rgba(255,255,255,.32);
+}
+.reel-sound-icon{
+  width:25px;
+  height:25px;
+  display:block;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.reel-sound-on{display:none}
+.reel-sound-control.sound-on .reel-sound-off{display:none}
+.reel-sound-control.sound-on .reel-sound-on{display:block}
+@media(max-width:600px){
+  .reel-sound-control{
+    right:10px;
+    top:78px;
+    width:50px;
+    height:50px;
+  }
+  .reel-sound-icon{width:24px;height:24px}
+}
+
 /* ===== PREMIUM REEL PLAY / PAUSE ===== */
 .reel-playpause-overlay{
   position:absolute;
@@ -2153,6 +2203,27 @@ onkeydown="sendComment(event,this)">
 
           </button>
         </div>
+
+        <!-- PREMIUM SOUND CONTROL -->
+        <button
+          class="reel-sound-control"
+          id="reelSoundButton"
+          type="button"
+          aria-label="Turn sound on"
+          onclick="toggleReelSound(event)">
+
+          <svg class="reel-sound-icon reel-sound-off" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 9v6h4l5 4V5L8 9H4z"></path>
+            <path d="M17 9l4 6"></path>
+            <path d="M21 9l-4 6"></path>
+          </svg>
+
+          <svg class="reel-sound-icon reel-sound-on" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 9v6h4l5 4V5L8 9H4z"></path>
+            <path d="M16 9.5c1.3 1.4 1.3 3.6 0 5"></path>
+            <path d="M18.5 7c2.7 2.8 2.7 7.2 0 10"></path>
+          </svg>
+        </button>
 
         <div class="reel-placeholder" id="reelPlaceholder">
           ▶️
@@ -3156,6 +3227,8 @@ function showPage(page,button,pushHistory = true){
 
     if(reelVideo){
       reelVideo.pause();
+      reelVideo.muted = true;
+      updateReelSoundUI();
     }
   }
 
@@ -4722,6 +4795,48 @@ function toggleReelLike(){
  }
 
 
+ function updateReelSoundUI(){
+  let video = document.getElementById("reelVideo");
+  let button = document.getElementById("reelSoundButton");
+
+  if(!video || !button){
+    return;
+  }
+
+  let soundOn = !video.muted;
+
+  button.classList.toggle("sound-on", soundOn);
+  button.setAttribute(
+    "aria-label",
+    soundOn ? "Turn sound off" : "Turn sound on"
+  );
+ }
+
+ function toggleReelSound(event){
+  if(event){
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  let video = document.getElementById("reelVideo");
+
+  if(!video){
+    return;
+  }
+
+  video.volume = 1;
+
+  if(video.muted){
+    video.muted = false;
+    updateReelSoundUI();
+    showToast("🔊 Sound ON");
+  }else{
+    video.muted = true;
+    updateReelSoundUI();
+    showToast("🔇 Sound OFF");
+  }
+ }
+
  function openReelComments(){
 
   let oldPanel =
@@ -5100,7 +5215,10 @@ if(count){
 
   video.src = videoURL;
   video.dataset.reelId = "local-" + file.name;
+  video.volume = 1;
+  video.muted = true;
   video.style.display = "block";
+  updateReelSoundUI();
 
   let placeholder = document.getElementById("reelPlaceholder");
 
