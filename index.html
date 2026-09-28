@@ -1513,6 +1513,98 @@ button{
   object-fit:cover;
   display:block;
   background:#111;
+  cursor:pointer;
+}
+
+/* ===== PREMIUM REEL PLAY / PAUSE ===== */
+.reel-playpause-overlay{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) scale(1);
+  width:74px;
+  height:74px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:15;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .22s ease, transform .22s ease;
+}
+
+.reel-playpause-overlay.show{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+}
+
+.reel-playpause-button{
+  width:74px;
+  height:74px;
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:50%;
+  background:rgba(15,15,25,.42);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  backdrop-filter:blur(14px) saturate(150%);
+  -webkit-backdrop-filter:blur(14px) saturate(150%);
+  box-shadow:0 10px 35px rgba(0,0,0,.38), inset 0 1px 1px rgba(255,255,255,.28);
+  pointer-events:auto;
+  cursor:pointer;
+  transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.reel-playpause-button:active{
+  transform:scale(.88);
+}
+
+.reel-playpause-button:hover{
+  background:rgba(15,15,25,.58);
+  box-shadow:0 12px 40px rgba(0,0,0,.45), inset 0 1px 1px rgba(255,255,255,.35);
+}
+
+.reel-playpause-icon{
+  width:30px;
+  height:30px;
+  display:block;
+  fill:currentColor;
+}
+
+.reel-play-icon{
+  margin-left:3px;
+}
+
+.reel-pause-icon{
+  display:none;
+}
+
+.reel-playpause-overlay.is-playing .reel-play-icon{
+  display:none;
+}
+
+.reel-playpause-overlay.is-playing .reel-pause-icon{
+  display:block;
+}
+
+.reel-video-box:active .reel-playpause-button{
+  transform:scale(.94);
+}
+
+@media(max-width:600px){
+  .reel-playpause-overlay,
+  .reel-playpause-button{
+    width:68px;
+    height:68px;
+  }
+
+  .reel-playpause-icon{
+    width:28px;
+    height:28px;
+  }
 }
 
 .reel-placeholder{
@@ -2039,10 +2131,30 @@ onkeydown="sendComment(event,this)">
           playsinline
           loop
           muted
-          onclick="toggleFeedReel(this)">
+          onclick="toggleReelPlay(event)"
+          onplay="updateReelPlayUI()"
+          onpause="updateReelPlayUI()">
         </video>
 
-        <div class="reel-placeholder">
+        <div class="reel-playpause-overlay show" id="reelPlayPauseOverlay">
+          <button
+            class="reel-playpause-button"
+            type="button"
+            aria-label="Play or pause reel"
+            onclick="toggleReelPlay(event)">
+
+            <svg class="reel-playpause-icon reel-play-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5.2v13.6c0 .8.9 1.3 1.6.9l10.1-6.8c.6-.4.6-1.3 0-1.7L9.6 4.3C8.9 3.9 8 4.4 8 5.2z"></path>
+            </svg>
+
+            <svg class="reel-playpause-icon reel-pause-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 5.5c0-.8.7-1.5 1.5-1.5S10 4.7 10 5.5v13c0 .8-.7 1.5-1.5 1.5S7 19.3 7 18.5v-13zm7 0c0-.8.7-1.5 1.5-1.5S17 4.7 17 5.5v13c0 .8-.7 1.5-1.5 1.5S14 19.3 14 18.5v-13z"></path>
+            </svg>
+
+          </button>
+        </div>
+
+        <div class="reel-placeholder" id="reelPlaceholder">
           ▶️
         </div>
 
@@ -4550,7 +4662,44 @@ function toggleReelLike(){
   }
 
 }
- function toggleReelPlay(){
+ let reelPlayPauseTimer = null;
+
+ function updateReelPlayUI(showControl){
+
+  let video = document.getElementById("reelVideo");
+  let overlay = document.getElementById("reelPlayPauseOverlay");
+
+  if(!video || !overlay){
+    return;
+  }
+
+  overlay.classList.toggle("is-playing", !video.paused);
+
+  if(reelPlayPauseTimer){
+    clearTimeout(reelPlayPauseTimer);
+    reelPlayPauseTimer = null;
+  }
+
+  let shouldShow =
+    showControl === true ||
+    video.paused;
+
+  overlay.classList.toggle("show", shouldShow);
+
+  if(!video.paused && shouldShow){
+    reelPlayPauseTimer = setTimeout(function(){
+      overlay.classList.remove("show");
+    }, 1500);
+  }
+
+ }
+
+ function toggleReelPlay(event){
+
+  if(event){
+    event.preventDefault();
+    event.stopPropagation();
+  }
 
   let video = document.getElementById("reelVideo");
 
@@ -4559,9 +4708,15 @@ function toggleReelLike(){
   }
 
   if(video.paused){
-    video.play();
+    video.play().then(function(){
+      updateReelPlayUI(true);
+    }).catch(function(error){
+      console.log("Play blocked:", error);
+      updateReelPlayUI(true);
+    });
   }else{
     video.pause();
+    updateReelPlayUI(true);
   }
 
  }
@@ -4960,77 +5115,6 @@ if(count){
   showToast("✅ Reel video ready!");
 
  }
-
-/* ===== MAITRI REELS PLAY + SAVE FIX ===== */
-function toggleFeedReel(video){
-  if(!video) return;
-  const card = video.closest('.reel-card');
-  const placeholder = card ? card.querySelector('.reel-placeholder') : null;
-
-  if(video.paused){
-    video.play().then(function(){
-      if(placeholder) placeholder.style.display='none';
-    }).catch(function(err){
-      console.log('Reel play blocked:', err);
-      showToast('▶️ Tap the reel to play');
-    });
-  }else{
-    video.pause();
-    if(placeholder) placeholder.style.display='block';
-  }
-}
-
-function saveFeedReel(button){
-  const card = button ? button.closest('.reel-card') : null;
-  if(!card) return;
-
-  const index = Array.from(document.querySelectorAll('.reel-card')).indexOf(card);
-  const video = card.querySelector('.reel-feed-video');
-  const reelId = (video && video.dataset.reelId) || ('demo-reel-' + (index + 1));
-  const key = 'maitri_saved_reel_' + reelId;
-  const saved = localStorage.getItem(key) === 'true';
-
-  if(saved){
-    localStorage.removeItem(key);
-    button.textContent='🔖';
-    showToast('🔖 Reel removed from Saved');
-  }else{
-    localStorage.setItem(key,'true');
-    button.textContent='📌';
-    showToast('✅ Reel saved');
-  }
-}
-
-function restoreSavedReels(){
-  document.querySelectorAll('.reel-card').forEach(function(card,index){
-    const video = card.querySelector('.reel-feed-video');
-    const button = card.querySelector('.reel-feed-actions button[onclick*="saveFeedReel"]');
-    if(!button) return;
-    const reelId = (video && video.dataset.reelId) || ('demo-reel-' + (index + 1));
-    if(localStorage.getItem('maitri_saved_reel_' + reelId) === 'true'){
-      button.textContent='📌';
-    }
-  });
-}
-
-document.addEventListener('DOMContentLoaded', function(){
-  restoreSavedReels();
-
-  document.querySelectorAll('.reel-feed-video').forEach(function(video){
-    video.addEventListener('play', function(){
-      const card = video.closest('.reel-card');
-      const placeholder = card ? card.querySelector('.reel-placeholder') : null;
-      if(placeholder) placeholder.style.display='none';
-    });
-
-    video.addEventListener('pause', function(){
-      const card = video.closest('.reel-card');
-      const placeholder = card ? card.querySelector('.reel-placeholder') : null;
-      if(placeholder) placeholder.style.display='block';
-    });
-  });
-});
-
  function uploadReel(input){
 
   let file = input.files[0];
