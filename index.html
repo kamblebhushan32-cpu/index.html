@@ -4960,6 +4960,77 @@ if(count){
   showToast("✅ Reel video ready!");
 
  }
+
+/* ===== MAITRI REELS PLAY + SAVE FIX ===== */
+function toggleFeedReel(video){
+  if(!video) return;
+  const card = video.closest('.reel-card');
+  const placeholder = card ? card.querySelector('.reel-placeholder') : null;
+
+  if(video.paused){
+    video.play().then(function(){
+      if(placeholder) placeholder.style.display='none';
+    }).catch(function(err){
+      console.log('Reel play blocked:', err);
+      showToast('▶️ Tap the reel to play');
+    });
+  }else{
+    video.pause();
+    if(placeholder) placeholder.style.display='block';
+  }
+}
+
+function saveFeedReel(button){
+  const card = button ? button.closest('.reel-card') : null;
+  if(!card) return;
+
+  const index = Array.from(document.querySelectorAll('.reel-card')).indexOf(card);
+  const video = card.querySelector('.reel-feed-video');
+  const reelId = (video && video.dataset.reelId) || ('demo-reel-' + (index + 1));
+  const key = 'maitri_saved_reel_' + reelId;
+  const saved = localStorage.getItem(key) === 'true';
+
+  if(saved){
+    localStorage.removeItem(key);
+    button.textContent='🔖';
+    showToast('🔖 Reel removed from Saved');
+  }else{
+    localStorage.setItem(key,'true');
+    button.textContent='📌';
+    showToast('✅ Reel saved');
+  }
+}
+
+function restoreSavedReels(){
+  document.querySelectorAll('.reel-card').forEach(function(card,index){
+    const video = card.querySelector('.reel-feed-video');
+    const button = card.querySelector('.reel-feed-actions button[onclick*="saveFeedReel"]');
+    if(!button) return;
+    const reelId = (video && video.dataset.reelId) || ('demo-reel-' + (index + 1));
+    if(localStorage.getItem('maitri_saved_reel_' + reelId) === 'true'){
+      button.textContent='📌';
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  restoreSavedReels();
+
+  document.querySelectorAll('.reel-feed-video').forEach(function(video){
+    video.addEventListener('play', function(){
+      const card = video.closest('.reel-card');
+      const placeholder = card ? card.querySelector('.reel-placeholder') : null;
+      if(placeholder) placeholder.style.display='none';
+    });
+
+    video.addEventListener('pause', function(){
+      const card = video.closest('.reel-card');
+      const placeholder = card ? card.querySelector('.reel-placeholder') : null;
+      if(placeholder) placeholder.style.display='block';
+    });
+  });
+});
+
  function uploadReel(input){
 
   let file = input.files[0];
